@@ -1,18 +1,18 @@
 import React, { FC } from 'react'
 import { StyledButton } from './styles'
 
-interface IProps {
-  onClick: () => {}
+export interface IProps {
+  onPress: any
   className: string
-  color: string
-  name: string
-  value: string
+  color?: string
+  name?: string
+  value?: number
 }
 
-const Button = (props: IProps) => {
+const Button: FC<IProps> = (props) => {
   return (
     <StyledButton
-      onClick={props.onClick}
+      onPress={props.onPress}
       className={props.className}
       color={props.color}
       name={props.name}

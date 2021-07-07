@@ -1,4 +1,6 @@
 import { View } from 'react-native'
 import styled from 'styled-components'
 
-export const Wrapper = styled(View)``
+export const Wrapper = styled(View)`
+  margin-top: 1.8rem;
+`
