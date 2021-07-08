@@ -7,11 +7,12 @@ import { store } from './store'
 import Header from './components/Header'
 import Numbers from './components/Numbers'
 import Login from './screens/Login'
+import Router from './router'
 
 export default function App() {
   return (
     <Provider store={store}>
-      <Login />
+      <Router />
     </Provider>
   )
 }

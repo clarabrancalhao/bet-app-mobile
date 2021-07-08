@@ -5,18 +5,20 @@ export const Card = styled(View)`
   border: 1px solid #dddddd;
   border-radius: 24px;
   background-color: #ffffff;
+  width: 306px;
 `
 export const ContentWrapper = styled(View)`
   flex-direction: column;
-  border: 2px solid #ebebeb;
-  padding: 10px 30px;
+  padding: 0 30px;
   width: 100%;
+  border-bottom-color: #ebebeb;
+  border-bottom-width: 1px;
 `
 
 export const Paragraph = styled(Text)`
   color: #9d9d9d;
   font-size: 17px;
-  margin-top: 34px;
+  margin-top: 30px;
 `
 
 export const Input = styled(TextInput)`
@@ -25,7 +27,7 @@ export const Input = styled(TextInput)`
 `
 
 export const ForgetPasswordText = styled(Text)`
-  padding-top: 26px;
+  padding-top: 22px;
   padding-right: 20px;
   text-align: right;
   color: #c1c1c1;
@@ -46,4 +48,5 @@ export const SubmitText = styled(Text)`
   width: 100%;
   font-size: 35px;
   color: #b5c401;
+  text-align: center;
 `

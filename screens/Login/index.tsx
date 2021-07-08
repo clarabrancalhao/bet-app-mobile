@@ -1,5 +1,7 @@
 import React from 'react'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
+import { AntDesign } from '@expo/vector-icons'
+
 import { BUTTON_THEME } from '../../components/Button/styles'
 import Button from '../../components/Button'
 import LoginCard from '../../components/LoginCard'
@@ -11,9 +13,19 @@ import {
   ContentWrapper,
   SignUpText,
   TitleText,
+  BottomText,
+  LogoWrapper,
+  LogoText,
+  Marker,
 } from './styles'
+import { colors } from '../../utils'
+import { FC } from 'react'
 
-const Login = () => {
+interface IProps {
+  navigation: any
+}
+
+const Login: FC<IProps> = ({ navigation }) => {
   const dispatch = useDispatch()
   const loginPage = useSelector((state: RootStateOrAny) => state.login.loginPage)
 
@@ -45,13 +57,21 @@ const Login = () => {
     <LoginPageWrapper>
       <ContentWrapper>
         <LoginContentWrapper>
+          <LogoWrapper>
+            <LogoText>TGL</LogoText>
+            <Marker />
+          </LogoWrapper>
           <TitleText>{cardTitle}</TitleText>
-          <LoginCard />
+          <LoginCard navigation={navigation} />
           <Button className={BUTTON_THEME.GHOST} onPress={buttonFunction}>
-            <SignUpText>{loginPage === 'login' ? 'Sign Up' : 'Back'}</SignUpText>
+            <SignUpText>
+              {loginPage === 'login' ? 'Sign Up' : 'Back'}
+              <AntDesign name="arrowright" size={32} color={colors.TITLE} />
+            </SignUpText>
           </Button>
         </LoginContentWrapper>
       </ContentWrapper>
+      <BottomText>Copyright 2020 Luby Software</BottomText>
     </LoginPageWrapper>
   )
 }

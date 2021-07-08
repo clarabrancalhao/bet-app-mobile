@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react'
-import { View, Text } from 'react-native'
 import { useSelector, RootStateOrAny } from 'react-redux'
 import useSelectNumber from '../../hooks/useSelectNumber'
 import { IGame } from '../../utils'
 import Button from '../Button'
 import { BUTTON_THEME } from '../Button/styles'
 
-import {} from './styles'
+import { Wrapper } from './styles'
 
 export default function Numbers() {
   const handleSelectNumber = useSelectNumber()
@@ -19,9 +18,8 @@ export default function Numbers() {
     [selectedGame]
   )
 
-  console.log({ numbers })
   return (
-    <View>
+    <Wrapper>
       {numbers.map((number) => (
         <Button
           key={number}
@@ -37,6 +35,6 @@ export default function Numbers() {
           {number < 10 ? '0' + number : number}
         </Button>
       ))}
-    </View>
+    </Wrapper>
   )
 }
