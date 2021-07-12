@@ -82,7 +82,7 @@ const LoginCard: FC<IProps> = ({ navigation }) => {
         <ContentWrapper>
           <Paragraph>Password</Paragraph>
           <Input
-            textContentType="password"
+            secureTextEntry={true}
             onBlur={handlePasswordValidation}
             onChange={handlePasswordError}
           />

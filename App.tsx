@@ -1,18 +1,24 @@
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
-import { View } from 'react-native'
-import { Provider } from 'react-redux'
+import React, { useEffect } from 'react'
+import { KeyboardAvoidingView, Platform } from 'react-native'
+import { Provider, RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 
 import { store } from './store'
-import Header from './components/Header'
-import Numbers from './components/Numbers'
-import Login from './screens/Login'
 import Router from './router'
+import { setLoading, setUserLogged } from './modules/login/actions'
+import { getGames } from './modules/games/actions'
 
 export default function App() {
   return (
     <Provider store={store}>
-      <Router />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS == 'ios' ? 0 : 20}
+        enabled={Platform.OS === 'ios' ? true : false}
+      >
+        <Router />
+      </KeyboardAvoidingView>
     </Provider>
   )
 }

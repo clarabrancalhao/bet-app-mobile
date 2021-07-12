@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { Dispatch } from 'react'
 import { IGame, ISaveGame } from '../../utils/'
@@ -50,13 +51,13 @@ export const clearCart = () => ({
 })
 
 export const saveCart = (games: ISaveGame[]) => {
-  return (dispatch: Dispatch<any>) => {
+  return async (dispatch: Dispatch<any>) => {
     dispatch(saveCartPending())
-    const userId = localStorage.getItem('user_id')
-    const token = localStorage.getItem('token')
+    const userId = await AsyncStorage.getItem('user_id')
+    const token = await AsyncStorage.getItem('token')
     axios
       .post(
-        `http://localhost:3333/users/${userId}/bets`,
+        `https://application-mock-server.loca.lt/users/${userId}/bets`,
         { bets: games },
         {
           headers: {
@@ -73,12 +74,12 @@ export const saveCart = (games: ISaveGame[]) => {
 }
 
 export const getSavedGames = () => {
-  return (dispatch: Dispatch<any>) => {
+  return async (dispatch: Dispatch<any>) => {
     dispatch(getGamesPending())
-    const userId = localStorage.getItem('user_id')
-    const token = localStorage.getItem('token')
+    const userId = await AsyncStorage.getItem('user_id')
+    const token = await AsyncStorage.getItem('token')
     axios
-      .get(`http://localhost:3333/users/${userId}/bets`, {
+      .get(`https://application-mock-server.loca.lt/users/${userId}/bets`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },

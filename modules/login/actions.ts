@@ -22,9 +22,9 @@ export const sendEmailPassword = (email: string) => {
   return (dispatch: any) => {
     dispatch(changePasswordPending())
     axios
-      .post('http://localhost:3333/passwords', {
+      .post('https://application-mock-server.loca.lt/passwords', {
         email: email,
-        redirect_url: 'http://localhost:3000/reset-password',
+        redirect_url: 'https://application-mock-server.loca.lt/reset-password',
       })
       .then(() => {
         {
@@ -38,7 +38,7 @@ export const changePassword = ({ password, confirmedPassword, token }: IChangePa
   return (dispatch: any) => {
     dispatch(changePasswordPending())
     axios
-      .put('http://localhost:3333/passwords', {
+      .put('https://application-mock-server.loca.lt/passwords', {
         password,
         password_confirmation: confirmedPassword,
         token,

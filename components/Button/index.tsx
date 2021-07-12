@@ -1,26 +1,48 @@
 import React, { FC } from 'react'
-import { StyledButton } from './styles'
+import {
+  AddToCartButton,
+  GamesButton,
+  GhostButton,
+  GreenBorderButton,
+  NumberCell,
+  SaveCartButton,
+} from './styles'
 
 export interface IProps {
   onPress: any
   className: string
   color?: string
-  name?: string
+  id?: string
   value?: number
 }
 
-const Button: FC<IProps> = (props) => {
-  return (
-    <StyledButton
-      onPress={props.onPress}
-      className={props.className}
-      color={props.color}
-      name={props.name}
-      value={props.value}
-    >
-      {props.children}
-    </StyledButton>
-  )
+const Button: FC<IProps> = ({ onPress, className, id, value, color, children }) => {
+  console.log(className)
+  if (className === 'ghost') {
+    return <GhostButton onPress={onPress}>{children}</GhostButton>
+  }
+  if (className === 'number-cell' || className === 'number-cell active') {
+    return (
+      <NumberCell onPress={onPress} color={color} className={className}>
+        {children}
+      </NumberCell>
+    )
+  }
+  if (className === 'green-border') {
+    return <GreenBorderButton onPress={onPress}>{children}</GreenBorderButton>
+  }
+  if (className === 'save-cart') {
+    return <SaveCartButton onPress={onPress}>{children}</SaveCartButton>
+  }
+  if (className === 'add-to-cart') {
+    return <AddToCartButton onPress={onPress}>{children}</AddToCartButton>
+  } else {
+    return (
+      <GamesButton color={color} className={className} id={id} onPress={onPress}>
+        {children}
+      </GamesButton>
+    )
+  }
 }
 
 export default Button

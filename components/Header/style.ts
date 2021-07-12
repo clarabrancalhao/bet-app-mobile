@@ -7,6 +7,8 @@ export const Wrapper = styled(View)`
   flex-direction: row;
   height: 100px;
   align-items: flex-end;
+  background-color: #ffffff;
+  padding-bottom: 18px;
 `
 
 export const LogoWrapper = styled(View)`
@@ -25,4 +27,5 @@ export const LogoText = styled(Text)`
   font-size: 30px;
   color: ${colors.TITLE};
   font-weight: bold;
+  font-style: italic;
 `

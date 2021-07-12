@@ -5,22 +5,23 @@ import {
   GET_GAMES_REJECT,
   SELECT_GAME,
   SELECT_FILTER,
+  REMOVE_FILTER,
 } from './actions'
 
 interface IInitialState {
   results: IGame[]
   loading: boolean
   error: string | null
-  selected: IGame | null
-  selectedFilter: IGame | null
+  selected: IGame[]
+  selectedFilter: IGame[]
 }
 
 const initialState = {
   results: [],
   loading: false,
   error: null,
-  selected: null,
-  selectedFilter: null,
+  selected: [],
+  selectedFilter: [],
 }
 
 function games(state: IInitialState = initialState, action: any) {
@@ -49,13 +50,20 @@ function games(state: IInitialState = initialState, action: any) {
     case SELECT_GAME:
       return {
         ...state,
-        selected: action.payload,
+        selected: [action.payload],
       }
 
     case SELECT_FILTER:
+      console.log('aaaa')
       return {
         ...state,
-        selectedFilter: action.payload,
+        selectedFilter: [...state.selectedFilter, action.payload],
+      }
+    case REMOVE_FILTER:
+      const newFilter = state.selectedFilter?.filter((game) => game.type !== action.payload)
+      return {
+        ...state,
+        selectedFilter: newFilter,
       }
 
     default:

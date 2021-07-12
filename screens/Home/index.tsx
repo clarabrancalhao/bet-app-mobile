@@ -1,10 +1,18 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+
+import SelectGameCard from '../../components/SelectGameCard'
+import Header from '../../components/Header'
+import { ContentWrapper, Paragraph, Title, Wrapper } from './styles'
 
 export default function Home() {
   return (
-    <View>
-      <Text>Teste</Text>
-    </View>
+    <Wrapper>
+      <Header />
+      <ContentWrapper>
+        <Title>RECENT GAMES</Title>
+        <Paragraph>Filters</Paragraph>
+        <SelectGameCard type="filter" />
+      </ContentWrapper>
+    </Wrapper>
   )
 }
