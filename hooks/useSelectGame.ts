@@ -7,7 +7,7 @@ import { IGame } from '../utils/'
 
 export const useSelectGame = () => {
   const dispatch = useDispatch()
-  const selectedGame: IGame[] = useSelector((state: RootStateOrAny) => state.games.selected)
+  const selectedGame: IGame = useSelector((state: RootStateOrAny) => state.games.selectedGame)
   const selectedFilter: IGame[] = useSelector((state: RootStateOrAny) => state.games.selectedFilter)
 
   const handleSelectGame = (game: IGame, type: string) => {
@@ -18,8 +18,9 @@ export const useSelectGame = () => {
         dispatch(selectFilter(game))
       }
     }
+
     if (type === 'select') {
-      if (selectedGame[0].type !== game.type) {
+      if (selectedGame?.type !== game.type) {
         dispatch(clearGame())
         dispatch(selectGame(game))
       } else {

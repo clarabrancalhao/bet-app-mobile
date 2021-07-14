@@ -7,7 +7,7 @@ const useSelectNumber = () => {
   const dispatch = useDispatch()
 
   const selectedNumbers: number[] = useSelector((state: RootStateOrAny) => state.cart.numbers)
-  const selectedGame: IGame = useSelector((state: RootStateOrAny) => state.games.selected)
+  const selectedGame: IGame = useSelector((state: RootStateOrAny) => state.games.selectedGame)
 
   const handleSelectNumber = (curNumber: number) => {
     const selected = selectedNumbers.length

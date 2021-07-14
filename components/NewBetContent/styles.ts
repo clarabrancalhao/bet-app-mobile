@@ -43,3 +43,19 @@ export const SmallBoldText = styled(Text)`
   color: ${colors.TEXT};
   font-weight: bold;
 `
+
+export const ButtonsWrapper = styled(View)`
+  flex-direction: row;
+  justify-content: space-between;
+`
+export const GreenText = styled(Text)`
+  font-weight: bold;
+  font-size: 13px;
+  color: ${colors.TGL};
+`
+
+export const WhiteText = styled(Text)`
+  font-weight: bold;
+  font-size: 13px;
+  color: #ffffff;
+`

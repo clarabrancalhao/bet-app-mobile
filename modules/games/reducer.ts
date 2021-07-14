@@ -12,7 +12,7 @@ interface IInitialState {
   results: IGame[]
   loading: boolean
   error: string | null
-  selectedGame: IGame[]
+  selectedGame: IGame | null
   selectedFilter: IGame[]
 }
 
@@ -20,7 +20,7 @@ const initialState = {
   results: [],
   loading: false,
   error: null,
-  selectedGame: [],
+  selectedGame: null,
   selectedFilter: [],
 }
 
@@ -51,7 +51,7 @@ function games(state: IInitialState = initialState, action: any) {
     case SELECT_GAME:
       return {
         ...state,
-        selectedGame: [...action.payload],
+        selectedGame: action.payload,
       }
 
     case SELECT_FILTER:

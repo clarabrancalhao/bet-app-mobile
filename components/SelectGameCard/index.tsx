@@ -2,20 +2,16 @@ import React, { FC } from 'react'
 import { RootStateOrAny, useSelector } from 'react-redux'
 
 import { useSelectGame } from '../../hooks/useSelectGame'
-import { IGame } from '../../utils/'
+import { IGame, ISaveGame } from '../../utils/'
 import { BUTTON_THEME } from '../Button/styles'
 import Button from '../Button'
 import { ButtonText, ContentWrapper } from './styles'
-import { NativeSyntheticEvent } from 'react-native'
 
 const SelectGameCard: FC<{ type: string }> = (props) => {
   const handleSelect = useSelectGame()
   const games: IGame[] = useSelector((state: RootStateOrAny) => state.games.results)
-  const selectedGame: IGame[] = useSelector((state: RootStateOrAny) => state.games.selected)
+  const selectedGame: IGame = useSelector((state: RootStateOrAny) => state.games.selectedGame)
   const selectedFilter: IGame[] = useSelector((state: RootStateOrAny) => state.games.selectedFilter)
-
-  const buttonType = props.type === 'filter' ? selectedFilter : selectedGame
-
   return (
     <ContentWrapper>
       {games.map((game: IGame) => {
@@ -23,7 +19,11 @@ const SelectGameCard: FC<{ type: string }> = (props) => {
           <Button
             key={game.type}
             className={
-              buttonType?.find((type) => type.type === game.type)
+              props.type === 'filter'
+                ? selectedFilter.find((type) => type.type === game.type)
+                  ? BUTTON_THEME.GAMES_ACTIVE
+                  : BUTTON_THEME.GAMES
+                : selectedGame?.type === game.type
                 ? BUTTON_THEME.GAMES_ACTIVE
                 : BUTTON_THEME.GAMES
             }
@@ -31,7 +31,15 @@ const SelectGameCard: FC<{ type: string }> = (props) => {
             onPress={() => handleSelect(game, props.type)}
           >
             <ButtonText
-              className={buttonType?.find((type) => type.type === game.type) ? 'active' : ''}
+              className={
+                props.type === 'filter'
+                  ? selectedFilter.find((type) => type.type === game.type)
+                    ? 'active'
+                    : ''
+                  : selectedGame?.type === game.type
+                  ? 'active'
+                  : ''
+              }
               color={game.color}
             >
               {game.type}

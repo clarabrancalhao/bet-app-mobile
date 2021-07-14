@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { TouchableOpacity } from 'react-native'
 
 import Button, { IProps } from './index'
+import { colors } from '../../utils'
 
 export const BUTTON_THEME = {
   GAMES: 'games',
@@ -12,6 +13,7 @@ export const BUTTON_THEME = {
   GREEN_BORDER: 'green-border',
   NUMBER_CELL: 'number-cell',
   NUMBER_CELL_ACTIVE: 'number-cell active',
+  SMALL_CELL: 'small-cell',
 }
 
 export const GamesButton = styled(TouchableOpacity)<IProps>`
@@ -26,7 +28,7 @@ export const SaveCartButton = styled(TouchableOpacity)`
   width: 100%;
   background: #f4f4f4;
   border: 1px solid #e2e2e2;
-  color: #27c383;
+  color: ${colors.TGL};
   font-size: 35px;
   align-items: center;
   justify-content: space-around;
@@ -34,25 +36,26 @@ export const SaveCartButton = styled(TouchableOpacity)`
 `
 
 export const AddToCartButton = styled(TouchableOpacity)`
-  background: #27c383;
+  background: ${colors.TGL};
   border: none;
   border-radius: 10px;
   color: #ffffff;
   font-size: 16px;
   padding: 17px 22px;
-  white-space: pre;
   width: auto;
   justify-content: space-around;
   align-items: center;
+  margin: 4px;
 `
 
 export const GreenBorderButton = styled(TouchableOpacity)`
-  border: 1px solid #27c383;
+  border: 1px solid ${colors.TGL};
   border-radius: 10px;
   padding: 17px 22px;
-  color: #27c383;
+  color: ${colors.TGL};
   font-size: 16px;
   width: auto;
+  margin: 4px;
 `
 
 export const NumberCell = styled(TouchableOpacity)<IProps>`
@@ -61,6 +64,17 @@ export const NumberCell = styled(TouchableOpacity)<IProps>`
   width: 59px;
   height: 59px;
   font-size: 20px;
+  color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+`
+export const SmallCell = styled(TouchableOpacity)<IProps>`
+  border-radius: 100px;
+  background: ${({ color }) => color};
+  width: 40px;
+  height: 40px;
+  font-size: 13px;
   color: #ffffff;
   justify-content: center;
   align-items: center;
