@@ -38,3 +38,5 @@ export const LOGIN_PAGE_LINKS: any = {
   forgetPassword: 'Send link',
   register: 'Register',
 }
+
+export const baseUrl = 'https://popular-sheep-6.loca.lt/'

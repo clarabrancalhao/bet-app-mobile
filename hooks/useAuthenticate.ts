@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import { setLoading, setUserLogged } from '../modules/login/actions'
 import { getGames } from '../modules/games/actions'
+import { baseUrl } from '../utils'
 
 const useAuthenticate = () => {
   const loginPage: string = useSelector((state: RootStateOrAny) => state.login.loginPage)
@@ -12,9 +13,9 @@ const useAuthenticate = () => {
   const handleAuthentication = async (email: string, password: string, navigation: any) => {
     try {
       if (loginPage === 'register') {
-        await axios.post('https://application-mock-server.loca.lt/users', { email, password })
+        await axios.post(`${baseUrl}users`, { email, password })
       }
-      const response = await axios.post('https://application-mock-server.loca.lt/sessions', {
+      const response = await axios.post(`${baseUrl}sessions`, {
         email,
         password,
       })
@@ -29,9 +30,7 @@ const useAuthenticate = () => {
       } else {
         throw new Error()
       }
-    } catch (err) {
-      console.log(err)
-    }
+    } catch (err) {}
     //notify('Email or password incorrect.')
   }
 

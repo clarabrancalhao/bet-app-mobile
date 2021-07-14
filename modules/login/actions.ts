@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { baseUrl } from '../../utils'
 
 export const SET_EMAIL_ERROR = 'SET_EMAIL_ERROR'
 export const SET_PASSWORD_ERROR = 'SET_PASSWORD_ERROR'
@@ -22,9 +23,9 @@ export const sendEmailPassword = (email: string) => {
   return (dispatch: any) => {
     dispatch(changePasswordPending())
     axios
-      .post('https://application-mock-server.loca.lt/passwords', {
+      .post(`${baseUrl}passwords`, {
         email: email,
-        redirect_url: 'https://application-mock-server.loca.lt/reset-password',
+        redirect_url: `${baseUrl}reset-password`,
       })
       .then(() => {
         {
@@ -38,7 +39,7 @@ export const changePassword = ({ password, confirmedPassword, token }: IChangePa
   return (dispatch: any) => {
     dispatch(changePasswordPending())
     axios
-      .put('https://application-mock-server.loca.lt/passwords', {
+      .put(`${baseUrl}passwords`, {
         password,
         password_confirmation: confirmedPassword,
         token,

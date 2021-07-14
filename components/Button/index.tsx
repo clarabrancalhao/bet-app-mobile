@@ -17,7 +17,6 @@ export interface IProps {
 }
 
 const Button: FC<IProps> = ({ onPress, className, id, value, color, children }) => {
-  console.log(className)
   if (className === 'ghost') {
     return <GhostButton onPress={onPress}>{children}</GhostButton>
   }

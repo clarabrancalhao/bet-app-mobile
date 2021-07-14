@@ -1,12 +1,10 @@
 import { StatusBar } from 'expo-status-bar'
-import React, { useEffect } from 'react'
-import { KeyboardAvoidingView, Platform } from 'react-native'
-import { Provider, RootStateOrAny, useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native'
+import { Provider } from 'react-redux'
 
 import { store } from './store'
 import Router from './router'
-import { setLoading, setUserLogged } from './modules/login/actions'
-import { getGames } from './modules/games/actions'
 
 export default function App() {
   return (
@@ -17,7 +15,9 @@ export default function App() {
         keyboardVerticalOffset={Platform.OS == 'ios' ? 0 : 20}
         enabled={Platform.OS === 'ios' ? true : false}
       >
-        <Router />
+        <SafeAreaView style={{ flex: 1 }}>
+          <Router />
+        </SafeAreaView>
       </KeyboardAvoidingView>
     </Provider>
   )

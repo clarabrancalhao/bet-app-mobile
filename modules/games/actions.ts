@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { Dispatch } from 'react'
-import { IGame } from '../../utils/'
+import { baseUrl, IGame } from '../../utils/'
 
 export const GET_GAMES_PENDING = 'GET_GAMES_PENDING'
 export const GET_GAMES_REJECT = 'GET_GAMES_REJECT'
@@ -14,7 +14,7 @@ export const getGames = () => {
     dispatch(getGamesPending())
     const token = await AsyncStorage.getItem('token')
     axios
-      .get('https://application-mock-server.loca.lt/games', {
+      .get(`${baseUrl}games`, {
         headers: { Authorization: 'Bearer ' + token },
       })
       .then((response) => dispatch(getGamesFulfilled(response.data)))

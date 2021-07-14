@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { Dispatch } from 'react'
-import { IGame, ISaveGame } from '../../utils/'
+import { baseUrl, IGame, ISaveGame } from '../../utils/'
 
 export const ADD_TO_CART = 'ADD_TO_CART'
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
@@ -57,7 +57,7 @@ export const saveCart = (games: ISaveGame[]) => {
     const token = await AsyncStorage.getItem('token')
     axios
       .post(
-        `https://application-mock-server.loca.lt/users/${userId}/bets`,
+        `${baseUrl}users/${userId}/bets`,
         { bets: games },
         {
           headers: {
@@ -79,7 +79,7 @@ export const getSavedGames = () => {
     const userId = await AsyncStorage.getItem('user_id')
     const token = await AsyncStorage.getItem('token')
     axios
-      .get(`https://application-mock-server.loca.lt/users/${userId}/bets`, {
+      .get(`${baseUrl}users/${userId}/bets`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },

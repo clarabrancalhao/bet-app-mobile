@@ -13,9 +13,9 @@ export const useSelectGame = () => {
   const handleSelectGame = (game: IGame, type: string) => {
     if (type === 'filter') {
       if (selectedFilter?.find((filter) => filter.type === game.type)) {
-        dispatch(selectFilter(game))
-      } else {
         dispatch(removeFilter(game.type))
+      } else {
+        dispatch(selectFilter(game))
       }
     }
     if (type === 'select') {

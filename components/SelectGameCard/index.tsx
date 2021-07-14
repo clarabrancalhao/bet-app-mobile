@@ -16,8 +16,6 @@ const SelectGameCard: FC<{ type: string }> = (props) => {
 
   const buttonType = props.type === 'filter' ? selectedFilter : selectedGame
 
-  console.log({ selectedFilter, selectedGame })
-
   return (
     <ContentWrapper>
       {games.map((game: IGame) => {

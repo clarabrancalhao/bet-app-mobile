@@ -9,20 +9,18 @@ const useSelectNumber = () => {
   const selectedNumbers: number[] = useSelector((state: RootStateOrAny) => state.cart.numbers)
   const selectedGame: IGame = useSelector((state: RootStateOrAny) => state.games.selected)
 
-  const handleSelectNumber = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSelectNumber = (curNumber: number) => {
     const selected = selectedNumbers.length
-    const isSelected = selectedNumbers.find(
-      (number: number) => number === +event.currentTarget.value
-    )
+    const isSelected = selectedNumbers.find((number: number) => number === curNumber)
 
     if (!isSelected) {
       if (selected < selectedGame['max-number']) {
-        dispatch(addNumber(+event.currentTarget.value))
+        dispatch(addNumber(curNumber))
       } else {
         //notify(`You can select aly ${selectedGame['max-number']} numbers`);
       }
     } else {
-      dispatch(removeNumber(+event.currentTarget.value))
+      dispatch(removeNumber(curNumber))
     }
   }
 

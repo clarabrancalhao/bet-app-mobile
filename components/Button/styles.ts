@@ -56,16 +56,15 @@ export const GreenBorderButton = styled(TouchableOpacity)`
 `
 
 export const NumberCell = styled(TouchableOpacity)<IProps>`
-  border-radius: 50%;
+  border-radius: 100px;
   background: ${({ className, color }) => (className === 'number-cell' ? '#adc0c4' : color)};
-  width: 63px;
-  height: 63px;
+  width: 59px;
+  height: 59px;
   font-size: 20px;
   color: #ffffff;
   justify-content: center;
   align-items: center;
-  border: none;
-  margin: 0 12px 12px 0;
+  margin: 5px;
 `
 
 export const GhostButton = styled(TouchableOpacity)`

@@ -14,7 +14,7 @@ export const ContentWrapper = styled(View)`
 `
 
 export const ButtonText = styled(Text)<IProps>`
-  color: ${({ color }) => color};
+  color: ${({ color, className }) => (className === 'active' ? '#FFFFFF' : color)};
   font-weight: bold;
   font-size: 14px;
   font-style: italic;
