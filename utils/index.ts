@@ -39,4 +39,4 @@ export const LOGIN_PAGE_LINKS: any = {
   register: 'Register',
 }
 
-export const baseUrl = 'https://popular-sheep-6.loca.lt/'
+export const baseUrl = 'https://application-mock-server.loca.lt/'

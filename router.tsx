@@ -14,7 +14,15 @@ const Tab = createBottomTabNavigator()
 
 function TabScreen() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        style: {
+          height: 72,
+          borderTopLeftRadius: 24,
+          borderTopRightRadius: 24,
+        },
+      }}
+    >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="NewBet" component={NewBet} />
       <Tab.Screen name="Account" component={Account} />
