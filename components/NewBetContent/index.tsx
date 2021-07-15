@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, FlatList } from 'react-native'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
+import { v4 as uuid } from 'uuid'
+
 import useCompleteGame from '../../hooks/useCompleteGame'
 import useSelectNumber from '../../hooks/useSelectNumber'
-import { clearGame } from '../../modules/cart/actions'
+import { addGameToCart, clearGame } from '../../modules/cart/actions'
 import Button from '../Button'
 import { BUTTON_THEME } from '../Button/styles'
 import { ButtonText } from '../Numbers/styles'
@@ -31,6 +33,30 @@ export default function index() {
   const handleClearGame = () => {
     dispatch(clearGame())
   }
+
+  const handleAddToCart = () => {
+    if (numbers.length === selectedGame['max-number']) {
+      dispatch(
+        addGameToCart({
+          id: uuid(),
+          game_id: selectedGame.id,
+          date: Date.now(),
+          type: selectedGame.type,
+          price: selectedGame.price,
+          selectedNumbers: numbers,
+          color: selectedGame.color,
+          'min-cart-value': selectedGame['min-cart-value'],
+        })
+      )
+      dispatch(clearGame())
+    } else {
+      //notify(`You need to select ${selectedGame['max-number']} numbers`)
+    }
+  }
+
+  useEffect(() => {
+    return handleClearGame()
+  }, [handleClearGame, selectedGame])
 
   return (
     <ContentWrapper>
@@ -75,7 +101,12 @@ export default function index() {
             >
               <GreenText>Clear Game</GreenText>
             </Button>
-            <Button className={BUTTON_THEME.ADD_TO_CART} onPress={() => {}}>
+            <Button
+              className={BUTTON_THEME.ADD_TO_CART}
+              onPress={() => {
+                handleAddToCart()
+              }}
+            >
               <WhiteText>Add To Cart</WhiteText>
             </Button>
           </ButtonsWrapper>

@@ -19,7 +19,7 @@ export interface IProps {
   type?: string
   numbers?: number[]
   price?: number
-  date?: string
+  date?: number
 }
 
 export default function CartGames({ color, type, numbers, date, price }: IProps) {

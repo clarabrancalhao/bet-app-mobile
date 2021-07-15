@@ -6,13 +6,17 @@ import Header from '../../components/Header'
 import { CloseWrapper, DrawerWrapper, TitleWrapper, Wrapper } from './styles'
 import { DrawerLayoutAndroid } from 'react-native-gesture-handler'
 import { Title } from '../Home/styles'
-import { colors } from '../../utils'
+import { colors, IGame } from '../../utils'
 import Button from '../../components/Button'
 import { BUTTON_THEME } from '../../components/Button/styles'
 import CartGames from '../../components/CartGames'
+import { RootStateOrAny, useSelector } from 'react-redux'
 
 export default function index() {
   const drawer: any = useRef()
+  const cartGames: IGame[] = useSelector((state: RootStateOrAny) => state.cart.games)
+  const totalAmount = useSelector((state: RootStateOrAny) => state.cart.totalAmount)
+
   const navigationView = () => (
     <DrawerWrapper>
       <CloseWrapper>
@@ -24,13 +28,15 @@ export default function index() {
         <Ionicons name="cart-outline" size={27} color={colors.TGL} />
         <Title>CART</Title>
       </TitleWrapper>
-      <CartGames
-        color={colors.MEGA_SENA}
-        price={2.5}
-        numbers={[2, 5, 9, 3, 7, 45]}
-        date={'23/11/2021'}
-        type={'Mega-Sena'}
-      />
+      {cartGames.map((game) => (
+        <CartGames
+          color={game.color}
+          price={game.price}
+          numbers={game.selectedNumbers}
+          date={game.date}
+          type={game.type}
+        />
+      ))}
     </DrawerWrapper>
   )
 
