@@ -9,6 +9,7 @@ export const Wrapper = styled(View)`
   align-items: flex-end;
   background-color: #ffffff;
   padding-bottom: 18px;
+  justify-content: space-between;
 `
 
 export const LogoWrapper = styled(View)`
@@ -28,4 +29,11 @@ export const LogoText = styled(Text)`
   color: ${colors.TITLE};
   font-weight: bold;
   font-style: italic;
+`
+
+export const IconsWrapper = styled(View)`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 18px;
 `

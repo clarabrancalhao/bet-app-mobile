@@ -11,8 +11,9 @@ import Button from '../../components/Button'
 import { BUTTON_THEME } from '../../components/Button/styles'
 import CartGames from '../../components/CartGames'
 import { RootStateOrAny, useSelector } from 'react-redux'
+import { useCallback } from 'react'
 
-export default function index() {
+export default function index({ navigation }: any) {
   const drawer: any = useRef()
   const cartGames: IGame[] = useSelector((state: RootStateOrAny) => state.cart.games)
   const totalAmount = useSelector((state: RootStateOrAny) => state.cart.totalAmount)
@@ -30,6 +31,7 @@ export default function index() {
       </TitleWrapper>
       {cartGames.map((game) => (
         <CartGames
+          key={game.id}
           color={game.color}
           price={game.price}
           numbers={game.selectedNumbers}
@@ -40,6 +42,10 @@ export default function index() {
     </DrawerWrapper>
   )
 
+  const handleOpenDrawer = useCallback(() => {
+    drawer.current.openDrawer()
+  }, [])
+
   return (
     <DrawerLayoutAndroid
       renderNavigationView={navigationView}
@@ -48,7 +54,7 @@ export default function index() {
       drawerPosition={'right'}
     >
       <Wrapper>
-        <Header />
+        <Header page="newBet" drawer={handleOpenDrawer} navigation={navigation} />
         <Numbers />
       </Wrapper>
     </DrawerLayoutAndroid>

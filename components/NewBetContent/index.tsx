@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { View, Text, FlatList } from 'react-native'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
-import { v4 as uuid } from 'uuid'
+import uuid from 'react-native-uuid'
 
 import useCompleteGame from '../../hooks/useCompleteGame'
 import useSelectNumber from '../../hooks/useSelectNumber'
 import { addGameToCart, clearGame } from '../../modules/cart/actions'
 import Button from '../Button'
 import { BUTTON_THEME } from '../Button/styles'
-import { ButtonText } from '../Numbers/styles'
 
 import SelectGameCard from '../SelectGameCard'
 import {
@@ -21,6 +20,7 @@ import {
   ButtonsWrapper,
   GreenText,
   WhiteText,
+  ButtonText,
 } from './styles'
 
 export default function index() {
@@ -38,7 +38,7 @@ export default function index() {
     if (numbers.length === selectedGame['max-number']) {
       dispatch(
         addGameToCart({
-          id: uuid(),
+          id: uuid.v4(),
           game_id: selectedGame.id,
           date: Date.now(),
           type: selectedGame.type,
@@ -54,10 +54,6 @@ export default function index() {
     }
   }
 
-  useEffect(() => {
-    return handleClearGame()
-  }, [handleClearGame, selectedGame])
-
   return (
     <ContentWrapper>
       <Title>NEW BET FOR {selectedGame?.type.toUpperCase()}</Title>
@@ -68,7 +64,6 @@ export default function index() {
         <>
           <FlatList
             style={{ flexBasis: 0 }}
-            contentContainerStyle={{ alignItems: 'center' }}
             data={numbers}
             numColumns={5}
             keyExtractor={(number) => `${number}`}

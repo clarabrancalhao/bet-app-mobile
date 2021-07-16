@@ -41,7 +41,7 @@ export const AddToCartButton = styled(TouchableOpacity)`
   border-radius: 10px;
   color: #ffffff;
   font-size: 16px;
-  padding: 17px 22px;
+  padding: 8px 6px;
   width: auto;
   justify-content: space-around;
   align-items: center;
@@ -51,10 +51,9 @@ export const AddToCartButton = styled(TouchableOpacity)`
 export const GreenBorderButton = styled(TouchableOpacity)`
   border: 1px solid ${colors.TGL};
   border-radius: 10px;
-  padding: 17px 22px;
+  padding: 8px 6px;
   color: ${colors.TGL};
   font-size: 16px;
-  width: auto;
   margin: 4px;
 `
 
@@ -72,9 +71,8 @@ export const NumberCell = styled(TouchableOpacity)<IProps>`
 export const SmallCell = styled(TouchableOpacity)<IProps>`
   border-radius: 100px;
   background: ${({ color }) => color};
-  width: 40px;
+  max-width: 40px;
   height: 40px;
-  font-size: 13px;
   color: #ffffff;
   justify-content: center;
   align-items: center;

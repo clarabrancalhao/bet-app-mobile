@@ -10,11 +10,11 @@ export const colors = {
 }
 
 export interface IGame {
-  id: string
+  id: string | number[]
   color: string
   type: string
   range?: number
-  date?: number
+  date?: Date
   price: number
   description?: string
   'max-number'?: number

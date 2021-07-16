@@ -1,10 +1,13 @@
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native'
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 
 import { store } from './store'
 import Router from './router'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getGames } from './modules/games/actions'
+import { setLoading } from './modules/login/actions'
 
 export default function App() {
   return (

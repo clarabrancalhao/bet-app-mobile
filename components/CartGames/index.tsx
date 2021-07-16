@@ -19,15 +19,20 @@ export interface IProps {
   type?: string
   numbers?: number[]
   price?: number
-  date?: number
+  date?: Date
 }
 
 export default function CartGames({ color, type, numbers, date, price }: IProps) {
+  const stringNumbersArray = numbers?.map((number) => {
+    const string = number < 10 ? `0${number}` : `${number}`
+    return string
+  })
+
   return (
     <CardWrapper>
       <Marker color={color} />
       <GameContentWrapper>
-        <Numbers>{numbers?.join(', ')}</Numbers>
+        <Numbers>{stringNumbersArray?.join(', ')}</Numbers>
         <TrashWrapper>
           <PriceDateText>
             {date} - ({price})

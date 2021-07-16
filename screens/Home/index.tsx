@@ -7,12 +7,16 @@ import { useSelector, RootStateOrAny, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { getGames } from '../../modules/games/actions'
 
-export default function Home() {
+interface IProps {
+  navigation: any
+}
+
+export default function Home({ navigation }: IProps) {
   const selectedGame = useSelector((state: RootStateOrAny) => state.games.selected)
 
   return (
     <Wrapper>
-      <Header />
+      <Header page="home" navigation={navigation} />
       <ContentWrapper>
         <Title>RECENT GAMES</Title>
         <Paragraph>Filters</Paragraph>

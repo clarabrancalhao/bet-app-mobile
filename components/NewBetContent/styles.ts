@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { colors } from '../../utils'
 
 export const ContentWrapper = styled(View)`
-  padding: 0 20px;
+  margin: 0 20px;
   background-color: ${colors.BACKGROUND};
   opacity: 0.8;
 `
@@ -47,6 +47,7 @@ export const SmallBoldText = styled(Text)`
 export const ButtonsWrapper = styled(View)`
   flex-direction: row;
   justify-content: space-between;
+  padding: 0 20px;
 `
 export const GreenText = styled(Text)`
   font-weight: bold;
@@ -57,5 +58,11 @@ export const GreenText = styled(Text)`
 export const WhiteText = styled(Text)`
   font-weight: bold;
   font-size: 13px;
+  color: #ffffff;
+`
+
+export const ButtonText = styled(Text)`
+  font-weight: bold;
+  font-size: 12px;
   color: #ffffff;
 `

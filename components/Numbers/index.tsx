@@ -15,7 +15,7 @@ export default function Numbers() {
 
   const selectedGame: IGame = useSelector((state: RootStateOrAny) => state.games.selectedGame)
 
-  const numbers = useMemo(
+  const numbers: number[] = useMemo(
     () => Array.from({ length: selectedGame?.range }, (_, i) => i + 1),
     [selectedGame]
   )
@@ -23,13 +23,13 @@ export default function Numbers() {
   return (
     <Wrapper>
       <FlatList
-        style={{ flexBasis: 0 }}
+        style={{ flexBasis: 0, marginBottom: 200 }}
         contentContainerStyle={{ alignItems: 'center' }}
         data={numbers}
         ListHeaderComponent={NewBetContent}
         stickyHeaderIndices={[0]}
         numColumns={5}
-        keyExtractor={(number) => `${number}`}
+        keyExtractor={(number: number) => `${number}`}
         renderItem={({ item: number }) => (
           <Button
             key={number}
