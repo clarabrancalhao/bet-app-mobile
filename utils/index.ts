@@ -10,11 +10,11 @@ export const colors = {
 }
 
 export interface IGame {
-  id: string | number[]
+  id: string
   color: string
   type: string
   range?: number
-  date?: Date
+  date: number
   price: number
   description?: string
   'max-number'?: number
@@ -38,6 +38,10 @@ export const LOGIN_PAGE_LINKS: any = {
   login: 'Log in',
   forgetPassword: 'Send link',
   register: 'Register',
+}
+
+export const formatCurrency = function (amount: string) {
+  return 'R$' + parseFloat(amount).toFixed(2).replace(/\./, ',')
 }
 
 export const baseUrl = 'https://application-mock-server.loca.lt/'

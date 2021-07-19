@@ -53,10 +53,11 @@ export const clearCart = () => ({
 export const saveCart = (games: ISaveGame[]) => {
   return async (dispatch: Dispatch<any>) => {
     dispatch(saveCartPending())
-    const userId = await AsyncStorage.getItem('user_id')
-    const token = await AsyncStorage.getItem('token')
-    axios
-      .post(
+    try {
+      const userId = await AsyncStorage.getItem('user_id')
+      const token = await AsyncStorage.getItem('token')
+
+      const response = await axios.post(
         `${baseUrl}users/${userId}/bets`,
         { bets: games },
         {
@@ -65,11 +66,12 @@ export const saveCart = (games: ISaveGame[]) => {
           },
         }
       )
-      .then(() => {
-        dispatch(saveCartCompleted())
-        dispatch(clearCart())
-      })
-      .catch((error) => dispatch(saveCartReject(error.message)))
+      dispatch(saveCartCompleted())
+      dispatch(clearCart())
+    } catch (error) {
+      console.log(error)
+      dispatch(saveCartReject(error.message))
+    }
   }
 }
 

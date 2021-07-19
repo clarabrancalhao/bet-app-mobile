@@ -1,7 +1,7 @@
 import React, { useRef, useCallback } from 'react'
 import { Ionicons, AntDesign } from '@expo/vector-icons'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
-import { DrawerLayoutAndroid } from 'react-native-gesture-handler'
+import { DrawerLayoutAndroid, ScrollView } from 'react-native-gesture-handler'
 
 import Numbers from '../../components/Numbers'
 import Header from '../../components/Header'
@@ -16,7 +16,7 @@ import {
   Wrapper,
 } from './styles'
 import { Title } from '../Home/styles'
-import { colors, IGame } from '../../utils'
+import { colors, formatCurrency, IGame } from '../../utils'
 import Button from '../../components/Button'
 import { BUTTON_THEME } from '../../components/Button/styles'
 import CartGames from '../../components/CartGames'
@@ -60,24 +60,27 @@ export default function index({ navigation }: any) {
         <Ionicons name="cart-outline" size={27} color={colors.TGL} style={{ marginRight: 12 }} />
         <Title>CART</Title>
       </TitleWrapper>
-      {cartGames.map((game) => (
-        <CartGames
-          key={game.type}
-          color={game.color}
-          price={game.price}
-          numbers={game.selectedNumbers}
-          date={game.date}
-          type={game.type}
-        />
-      ))}
+      <ScrollView>
+        {cartGames.map((game) => (
+          <CartGames
+            key={game.id}
+            color={game.color}
+            price={game.price}
+            numbers={game.selectedNumbers}
+            date={game.date}
+            type={game.type}
+          />
+        ))}
+      </ScrollView>
+
       <TotalWrapper>
         <TotalText>
           <Bold>CART</Bold> TOTAL:
         </TotalText>
-        <Bold>{totalAmount}</Bold>
+        <Bold>{formatCurrency(`${totalAmount}`)}</Bold>
       </TotalWrapper>
 
-      <Button className={BUTTON_THEME.SAVE_CART} onPress={() => {}}>
+      <Button className={BUTTON_THEME.SAVE_CART} onPress={handleSaveCart}>
         <ButtonText>
           Save <AntDesign name="arrowright" size={32} color={colors.TGL} />
         </ButtonText>

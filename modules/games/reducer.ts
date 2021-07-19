@@ -13,7 +13,7 @@ interface IInitialState {
   loading: boolean
   error: string | null
   selectedGame: IGame | null
-  selectedFilter: IGame[]
+  selectedFilters: IGame[]
 }
 
 const initialState = {
@@ -21,7 +21,7 @@ const initialState = {
   loading: false,
   error: null,
   selectedGame: null,
-  selectedFilter: [],
+  selectedFilters: [],
 }
 
 function games(state: IInitialState = initialState, action: any) {
@@ -57,13 +57,13 @@ function games(state: IInitialState = initialState, action: any) {
     case SELECT_FILTER:
       return {
         ...state,
-        selectedFilter: [...state.selectedFilter, action.payload],
+        selectedFilters: [...state.selectedFilters, action.payload],
       }
     case REMOVE_FILTER:
-      const newFilter = state.selectedFilter?.filter((game) => game.type !== action.payload)
+      const newFilter = state.selectedFilters?.filter((game) => game.type !== action.payload)
       return {
         ...state,
-        selectedFilter: newFilter,
+        selectedFilters: newFilter,
       }
 
     default:

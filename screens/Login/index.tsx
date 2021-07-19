@@ -22,6 +22,7 @@ import { colors } from '../../utils'
 import { FC } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getGames } from '../../modules/games/actions'
+import { getSavedGames } from '../../modules/cart/actions'
 
 interface IProps {
   navigation: any
@@ -40,6 +41,7 @@ const Login: FC<IProps> = ({ navigation }) => {
       if (token) {
         dispatch(setLoading(true))
         dispatch(getGames())
+        dispatch(getSavedGames())
         navigation.push('Home')
         dispatch(setLoading(false))
       }

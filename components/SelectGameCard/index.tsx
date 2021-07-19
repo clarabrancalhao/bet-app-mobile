@@ -11,7 +11,9 @@ const SelectGameCard: FC<{ type: string }> = (props) => {
   const handleSelect = useSelectGame()
   const games: IGame[] = useSelector((state: RootStateOrAny) => state.games.results)
   const selectedGame: IGame = useSelector((state: RootStateOrAny) => state.games.selectedGame)
-  const selectedFilter: IGame[] = useSelector((state: RootStateOrAny) => state.games.selectedFilter)
+  const selectedFilters: IGame[] = useSelector(
+    (state: RootStateOrAny) => state.games.selectedFilters
+  )
   return (
     <ContentWrapper>
       {games.map((game: IGame) => {
@@ -20,7 +22,7 @@ const SelectGameCard: FC<{ type: string }> = (props) => {
             key={game.type}
             className={
               props.type === 'filter'
-                ? selectedFilter.find((type) => type.type === game.type)
+                ? selectedFilters.find((type) => type.type === game.type)
                   ? BUTTON_THEME.GAMES_ACTIVE
                   : BUTTON_THEME.GAMES
                 : selectedGame?.type === game.type
@@ -33,7 +35,7 @@ const SelectGameCard: FC<{ type: string }> = (props) => {
             <ButtonText
               className={
                 props.type === 'filter'
-                  ? selectedFilter.find((type) => type.type === game.type)
+                  ? selectedFilters.find((type) => type.type === game.type)
                     ? 'active'
                     : ''
                   : selectedGame?.type === game.type
