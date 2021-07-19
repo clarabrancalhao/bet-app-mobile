@@ -32,7 +32,7 @@ export const Subtitle = styled(Text)`
 `
 
 export const SmallText = styled(Text)`
-  font-size: 14px;
+  font-size: 17px;
   font-style: italic;
   color: ${colors.TEXT};
 `
@@ -47,6 +47,7 @@ export const SmallBoldText = styled(Text)`
 export const ButtonsWrapper = styled(View)`
   flex-direction: row;
   justify-content: space-between;
+  width: 100%;
   padding: 0 20px;
 `
 export const GreenText = styled(Text)`

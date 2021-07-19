@@ -62,7 +62,6 @@ export const NumberCell = styled(TouchableOpacity)<IProps>`
   background: ${({ className, color }) => (className === 'number-cell' ? '#adc0c4' : color)};
   width: 59px;
   height: 59px;
-  font-size: 20px;
   color: #ffffff;
   justify-content: center;
   align-items: center;

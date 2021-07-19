@@ -63,7 +63,7 @@ export default function index() {
       {!!numbers.length && (
         <>
           <FlatList
-            style={{ flexBasis: 0 }}
+            style={{ flexBasis: 1, marginTop: 14, marginBottom: 14 }}
             data={numbers}
             numColumns={5}
             keyExtractor={(number) => `${number}`}

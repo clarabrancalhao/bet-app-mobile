@@ -1,22 +1,53 @@
-import React, { useRef } from 'react'
+import React, { useRef, useCallback } from 'react'
 import { Ionicons, AntDesign } from '@expo/vector-icons'
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
+import { DrawerLayoutAndroid } from 'react-native-gesture-handler'
 
 import Numbers from '../../components/Numbers'
 import Header from '../../components/Header'
-import { CloseWrapper, DrawerWrapper, TitleWrapper, Wrapper } from './styles'
-import { DrawerLayoutAndroid } from 'react-native-gesture-handler'
+import {
+  Bold,
+  ButtonText,
+  CloseWrapper,
+  DrawerWrapper,
+  TitleWrapper,
+  TotalText,
+  TotalWrapper,
+  Wrapper,
+} from './styles'
 import { Title } from '../Home/styles'
 import { colors, IGame } from '../../utils'
 import Button from '../../components/Button'
 import { BUTTON_THEME } from '../../components/Button/styles'
 import CartGames from '../../components/CartGames'
-import { RootStateOrAny, useSelector } from 'react-redux'
-import { useCallback } from 'react'
+import { saveCart } from '../../modules/cart/actions'
 
 export default function index({ navigation }: any) {
   const drawer: any = useRef()
   const cartGames: IGame[] = useSelector((state: RootStateOrAny) => state.cart.games)
   const totalAmount = useSelector((state: RootStateOrAny) => state.cart.totalAmount)
+
+  const dispatch = useDispatch()
+
+  const parsedGames = cartGames.map(({ game_id, selectedNumbers }) => ({
+    game_id,
+    numbers: selectedNumbers,
+  }))
+
+  const handleSaveCart = () => {
+    if (cartGames.length > 0) {
+      if (totalAmount > (cartGames && cartGames[0]['min-cart-value'])) {
+        dispatch(saveCart(parsedGames))
+        //notify('Cart Saved!')
+      } else {
+        // notify(
+        //   `The min cart value is ${handleFormat(games[0]['min-cart-value'])}.`
+        // )
+      }
+    } else {
+      //notify('You need to add some games to cart')
+    }
+  }
 
   const navigationView = () => (
     <DrawerWrapper>
@@ -26,12 +57,12 @@ export default function index({ navigation }: any) {
         </Button>
       </CloseWrapper>
       <TitleWrapper>
-        <Ionicons name="cart-outline" size={27} color={colors.TGL} />
+        <Ionicons name="cart-outline" size={27} color={colors.TGL} style={{ marginRight: 12 }} />
         <Title>CART</Title>
       </TitleWrapper>
       {cartGames.map((game) => (
         <CartGames
-          key={game.id}
+          key={game.type}
           color={game.color}
           price={game.price}
           numbers={game.selectedNumbers}
@@ -39,6 +70,18 @@ export default function index({ navigation }: any) {
           type={game.type}
         />
       ))}
+      <TotalWrapper>
+        <TotalText>
+          <Bold>CART</Bold> TOTAL:
+        </TotalText>
+        <Bold>{totalAmount}</Bold>
+      </TotalWrapper>
+
+      <Button className={BUTTON_THEME.SAVE_CART} onPress={() => {}}>
+        <ButtonText>
+          Save <AntDesign name="arrowright" size={32} color={colors.TGL} />
+        </ButtonText>
+      </Button>
     </DrawerWrapper>
   )
 

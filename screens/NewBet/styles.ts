@@ -14,12 +14,14 @@ export const Title = styled(Text)`
 `
 
 export const TitleWrapper = styled(View)`
+  margin-left: 24px;
   flex-direction: row;
   margin-top: 5px;
 `
 
 export const DrawerWrapper = styled(View)`
-  margin-left: 24px;
+  height: 100%;
+  justify-content: space-between;
 `
 
 export const CloseWrapper = styled(View)`
@@ -27,4 +29,30 @@ export const CloseWrapper = styled(View)`
   justify-content: flex-end;
   margin-top: 40px;
   margin-right: 28px;
+`
+
+export const ButtonText = styled(Text)`
+  font-size: 30px;
+  font-style: italic;
+  font-weight: bold;
+  color: ${colors.TGL};
+`
+export const TotalText = styled(Text)`
+  font-size: 14px;
+  font-style: italic;
+  color: ${colors.TITLE};
+`
+
+export const TotalWrapper = styled(View)`
+  margin: 0 24px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const Bold = styled(Text)`
+  font-weight: bold;
+  font-size: 14px;
+  font-style: normal;
+  color: ${colors.TITLE};
 `

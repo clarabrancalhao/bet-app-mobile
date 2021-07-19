@@ -18,7 +18,7 @@ export interface IGame {
   price: number
   description?: string
   'max-number'?: number
-  'min-cart-value'?: number
+  'min-cart-value': number
   selectedNumbers: number[]
   game_id: number
 }
