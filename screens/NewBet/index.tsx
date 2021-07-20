@@ -72,6 +72,9 @@ export default function index({ navigation }: any) {
         <Title>CART</Title>
       </TitleWrapper>
       <ScrollView>
+        {cartGames.length === 0 && (
+          <Title style={{ textAlign: 'center', marginTop: 150 }}>Your cart is empty</Title>
+        )}
         {cartGames.map((game) => (
           <CartGames
             key={game.id}

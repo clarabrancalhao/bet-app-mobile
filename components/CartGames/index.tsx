@@ -21,7 +21,7 @@ export interface IProps {
   color?: string
   type?: string
   numbers?: number[]
-  price?: number
+  price: number
   date?: number
   id: string
 }
@@ -35,7 +35,7 @@ export default function CartGames({ color, type, numbers, date, price, id }: IPr
   })
 
   const handleRemoveItem = () => {
-    dispatch(removeFromCart(id))
+    dispatch(removeFromCart(id, price))
   }
 
   return (

@@ -49,6 +49,7 @@ export const TotalWrapper = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 47px;
 `
 
 export const Bold = styled(Text)`

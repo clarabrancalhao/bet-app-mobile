@@ -38,9 +38,9 @@ export const addGameToCart = (game: IGame) => ({
   payload: game,
 })
 
-export const removeFromCart = (id: string) => ({
+export const removeFromCart = (id: string, price: number) => ({
   type: REMOVE_FROM_CART,
-  payload: id,
+  payload: { id, price },
 })
 
 export const clearGame = () => ({
