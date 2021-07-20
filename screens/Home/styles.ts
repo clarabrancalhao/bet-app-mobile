@@ -17,7 +17,9 @@ export const Paragraph = styled(Text)`
   margin-top: 15px;
 `
 
-export const Wrapper = styled(View)``
+export const Wrapper = styled(View)`
+  margin-bottom: 150px;
+`
 export const ContentWrapper = styled(View)`
   margin: 26px 20px 0 20px;
 `

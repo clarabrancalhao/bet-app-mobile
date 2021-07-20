@@ -75,6 +75,7 @@ export default function index({ navigation }: any) {
         {cartGames.map((game) => (
           <CartGames
             key={game.id}
+            id={game.id}
             color={game.color}
             price={game.price}
             numbers={game.selectedNumbers}

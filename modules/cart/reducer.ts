@@ -41,7 +41,7 @@ function cartReducer(state: IInitialState = initialState, action: IAction) {
       }
 
     case REMOVE_FROM_CART:
-      const filteredGames = state.games.filter((game) => game.id !== action.payload.id)
+      const filteredGames = state.games.filter((game) => game.id !== action.payload)
       return {
         ...state,
         games: filteredGames,

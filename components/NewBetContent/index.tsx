@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
-import { View, Text, FlatList } from 'react-native'
+import React from 'react'
+import { FlatList } from 'react-native'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import uuid from 'react-native-uuid'
+import { FlatGrid } from 'react-native-super-grid'
 
 import useCompleteGame from '../../hooks/useCompleteGame'
 import useSelectNumber from '../../hooks/useSelectNumber'
@@ -66,10 +67,10 @@ export default function index() {
       <SelectGameCard type="select" />
       {!!numbers.length && (
         <>
-          <FlatList
-            style={{ flexBasis: 1, marginTop: 14, marginBottom: 14 }}
+          <FlatGrid
+            itemDimension={40}
+            style={{ flex: 0, marginTop: 14, marginBottom: 14 }}
             data={numbers}
-            numColumns={5}
             keyExtractor={(number) => `${number}`}
             renderItem={({ item: number }) => (
               <Button

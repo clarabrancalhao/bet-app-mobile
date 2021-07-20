@@ -66,4 +66,5 @@ export const ButtonText = styled(Text)`
   font-weight: bold;
   font-size: 12px;
   color: #ffffff;
+  text-align: center;
 `
