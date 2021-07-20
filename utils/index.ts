@@ -13,11 +13,11 @@ export interface IGame {
   id: string
   color: string
   type: string
-  range?: number
+  range: number
   date: number
   price: number
   description?: string
-  'max-number'?: number
+  'max-number': number
   'min-cart-value': number
   selectedNumbers: number[]
   game_id: number

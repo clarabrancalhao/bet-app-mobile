@@ -1,14 +1,18 @@
 import { useDispatch } from 'react-redux'
 import { completeGame } from '../modules/cart/actions'
 import { IGame } from '../utils'
-//import { notify } from '../utils/notify';
+import Toast from 'react-native-toast-message'
 
 const useCompleteGame = () => {
   const dispatch = useDispatch()
 
   const handleCompleteGame = (selectedNumbers: number[], selectedGame: IGame) => {
     if (selectedNumbers.length === selectedGame['max-number']) {
-      //return notify('Your game is already completed.');
+      Toast.show({
+        type: 'error',
+        text1: 'Ops!',
+        text2: `Your game is already completed!`,
+      })
     }
     const randomNumbers = getRandomNumbers(selectedGame, selectedNumbers)
     dispatch(completeGame(randomNumbers))

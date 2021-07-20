@@ -1,5 +1,7 @@
 import React from 'react'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
+import Toast from 'react-native-toast-message'
+
 import { addNumber, removeNumber } from '../modules/cart/actions'
 import { IGame } from '../utils/'
 
@@ -17,7 +19,11 @@ const useSelectNumber = () => {
       if (selected < selectedGame['max-number']) {
         dispatch(addNumber(curNumber))
       } else {
-        //notify(`You can select aly ${selectedGame['max-number']} numbers`);
+        Toast.show({
+          type: 'error',
+          text1: 'Ops!',
+          text2: `You can select only ${selectedGame['max-number']} numbers`,
+        })
       }
     } else {
       dispatch(removeNumber(curNumber))

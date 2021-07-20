@@ -22,6 +22,7 @@ import {
   WhiteText,
   ButtonText,
 } from './styles'
+import Toast from 'react-native-toast-message'
 
 export default function index() {
   const selectedGame = useSelector((state: RootStateOrAny) => state.games.selectedGame)
@@ -50,7 +51,11 @@ export default function index() {
       )
       dispatch(clearGame())
     } else {
-      //notify(`You need to select ${selectedGame['max-number']} numbers`)
+      Toast.show({
+        type: 'error',
+        text1: 'Ops!',
+        text2: `You need to select ${selectedGame['max-number']} numbers`,
+      })
     }
   }
 
@@ -59,7 +64,6 @@ export default function index() {
       <Title>NEW BET FOR {selectedGame?.type.toUpperCase()}</Title>
       <Paragraph>Choose a game</Paragraph>
       <SelectGameCard type="select" />
-      <Subtitle>Fill your bet</Subtitle>
       {!!numbers.length && (
         <>
           <FlatList
@@ -108,12 +112,15 @@ export default function index() {
         </>
       )}
       {!numbers.length && (
-        <SmallText>
-          Mark as <SmallBoldText>many numbers</SmallBoldText> as you want up to a{' '}
-          <SmallBoldText>
-            maximum of {selectedGame ? selectedGame['max-number'] : null}
-          </SmallBoldText>
-        </SmallText>
+        <>
+          <Subtitle>Fill your bet</Subtitle>
+          <SmallText>
+            Mark as <SmallBoldText>many numbers</SmallBoldText> as you want up to a{' '}
+            <SmallBoldText>
+              maximum of {selectedGame ? selectedGame['max-number'] : null}
+            </SmallBoldText>
+          </SmallText>
+        </>
       )}
     </ContentWrapper>
   )

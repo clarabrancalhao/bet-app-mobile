@@ -1,6 +1,7 @@
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import Toast from 'react-native-toast-message'
 
 import { setLoading, setUserLogged } from '../modules/login/actions'
 import { getGames } from '../modules/games/actions'
@@ -31,7 +32,11 @@ const useAuthenticate = () => {
         throw new Error()
       }
     } catch (err) {}
-    //notify('Email or password incorrect.')
+    Toast.show({
+      type: 'error',
+      text1: 'Ops!',
+      text2: `E-mail or password incorrect`,
+    })
   }
 
   return handleAuthentication

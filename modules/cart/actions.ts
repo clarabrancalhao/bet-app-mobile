@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { Dispatch } from 'react'
+import Toast from 'react-native-toast-message'
 import { baseUrl, IGame, ISaveGame } from '../../utils/'
 
 export const ADD_TO_CART = 'ADD_TO_CART'
@@ -91,7 +92,11 @@ export const getSavedGames = () => {
       })
       .catch((error) => {
         dispatch(getGamesReject(error))
-        //NOTIFICAÇAO
+        Toast.show({
+          type: 'error',
+          text1: 'Ops!',
+          text2: 'Try again later.',
+        })
       })
   }
 }

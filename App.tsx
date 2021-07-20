@@ -1,13 +1,11 @@
 import { StatusBar } from 'expo-status-bar'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider } from 'react-redux'
+import Toast from 'react-native-toast-message'
 
 import { store } from './store'
 import Router from './router'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getGames } from './modules/games/actions'
-import { setLoading } from './modules/login/actions'
 
 export default function App() {
   return (
@@ -20,6 +18,7 @@ export default function App() {
       >
         <SafeAreaView style={{ flex: 1 }}>
           <Router />
+          <Toast ref={(ref) => Toast.setRef(ref)} />
         </SafeAreaView>
       </KeyboardAvoidingView>
     </Provider>

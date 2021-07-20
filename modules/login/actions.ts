@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Toast from 'react-native-toast-message'
 import { baseUrl } from '../../utils'
 
 export const SET_EMAIL_ERROR = 'SET_EMAIL_ERROR'
@@ -17,8 +18,6 @@ interface IChangePassword {
   token: string
 }
 
-//ADICIONAR NOTIFICAÇOES
-
 export const sendEmailPassword = (email: string) => {
   return (dispatch: any) => {
     dispatch(changePasswordPending())
@@ -28,10 +27,19 @@ export const sendEmailPassword = (email: string) => {
         redirect_url: `${baseUrl}reset-password`,
       })
       .then(() => {
-        {
-        }
+        Toast.show({
+          type: 'success',
+          text1: 'Success!',
+          text2: 'Please, check your mail box.',
+        })
       })
-      .catch((err) => {})
+      .catch((err) => {
+        Toast.show({
+          type: 'error',
+          text1: 'Ops! Something went wrong.',
+          text2: 'Try again later.',
+        })
+      })
   }
 }
 
@@ -45,10 +53,19 @@ export const changePassword = ({ password, confirmedPassword, token }: IChangePa
         token,
       })
       .then(() => {
-        {
-        }
+        Toast.show({
+          type: 'success',
+          text1: 'Success!',
+          text2: 'New password saved!',
+        })
       })
-      .catch((err) => {})
+      .catch((err) => {
+        Toast.show({
+          type: 'error',
+          text1: 'Ops! Something went wrong.',
+          text2: 'Try again later.',
+        })
+      })
   }
 }
 

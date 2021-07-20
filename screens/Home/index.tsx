@@ -38,37 +38,22 @@ export default function Home({ navigation }: IProps) {
               price={game.price}
             />
           ))}
-        {
-          selectedFilters.length > 0 &&
-            games.filter((game: IGame) => {
-              const test = selectedFilters.find((filter: IGame) => filter.type === game.type)
-              if (test) {
-                return (
-                  <RecentGame
-                    key={game.id}
-                    numbers={game.selectedNumbers}
-                    date={game.date}
-                    color={game.color}
-                    type={game.type}
-                    price={game.price}
-                  />
-                )
-              }
-            })
-          // selectedFilters.map((filter: IGame) => {
-          //   const filteredGames = games.filter((game: IGame) => game.type === filter.type)
-          //   return filteredGames.map((filtered: IGame) => (
-          //     <RecentGame
-          //       key={filtered.id}
-          //       numbers={filtered.selectedNumbers}
-          //       date={filtered.date}
-          //       color={filtered.color}
-          //       type={filtered.type}
-          //       price={filtered.price}
-          //     />
-          //   ))
-          // })}
-        }
+        {selectedFilters.length > 0 &&
+          games.map((game: IGame) => {
+            const test = selectedFilters.find((filter: IGame) => filter.type === game.type)
+            if (test) {
+              return (
+                <RecentGame
+                  key={game.id}
+                  numbers={game.selectedNumbers}
+                  date={game.date}
+                  color={game.color}
+                  type={game.type}
+                  price={game.price}
+                />
+              )
+            } else return
+          })}
       </ScrollView>
     </Wrapper>
   )

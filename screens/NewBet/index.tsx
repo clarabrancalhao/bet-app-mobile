@@ -21,6 +21,7 @@ import Button from '../../components/Button'
 import { BUTTON_THEME } from '../../components/Button/styles'
 import CartGames from '../../components/CartGames'
 import { saveCart } from '../../modules/cart/actions'
+import Toast from 'react-native-toast-message'
 
 export default function index({ navigation }: any) {
   const drawer: any = useRef()
@@ -38,14 +39,24 @@ export default function index({ navigation }: any) {
     if (cartGames.length > 0) {
       if (totalAmount > (cartGames && cartGames[0]['min-cart-value'])) {
         dispatch(saveCart(parsedGames))
-        //notify('Cart Saved!')
+        Toast.show({
+          type: 'success',
+          text1: 'Success!',
+          text2: 'Cart saved!',
+        })
       } else {
-        // notify(
-        //   `The min cart value is ${handleFormat(games[0]['min-cart-value'])}.`
-        // )
+        Toast.show({
+          type: 'error',
+          text1: 'Ops!',
+          text2: `The min cart value is ${formatCurrency(`${cartGames[0]['min-cart-value']}`)}.`,
+        })
       }
     } else {
-      //notify('You need to add some games to cart')
+      Toast.show({
+        type: 'error',
+        text1: 'Ops!',
+        text2: 'You need to add some games to cart',
+      })
     }
   }
 
