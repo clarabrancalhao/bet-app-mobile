@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons'
+import { Animated } from 'react-native'
+import { FC } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { BUTTON_THEME } from '../../components/Button/styles'
 import Button from '../../components/Button'
 import LoginCard from '../../components/LoginCard'
-//import Title from '../../components/Title';
 import { setRegister, setLogIn, setLoading } from '../../modules/login/actions'
 import {
   LoginContentWrapper,
@@ -19,8 +21,6 @@ import {
   Marker,
 } from './styles'
 import { colors } from '../../utils'
-import { FC } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getGames } from '../../modules/games/actions'
 import { getSavedGames } from '../../modules/cart/actions'
 
@@ -32,9 +32,55 @@ const Login: FC<IProps> = ({ navigation }) => {
   const dispatch = useDispatch()
   const loginPage = useSelector((state: RootStateOrAny) => state.login.loginPage)
 
+  const [cardTitle, setCardTitle] = useState('')
+  const [buttonFunction, setButtonFunction] = useState(() => {})
+
+  const fadeAnim = useRef(new Animated.Value(0)).current
+
   const getToken = async () => {
     return await AsyncStorage.getItem('token')
   }
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      useNativeDriver: false,
+      toValue: 1,
+      duration: 300,
+    }).start()
+  }
+
+  const fadeOut = () => {
+    Animated.timing(fadeAnim, {
+      useNativeDriver: false,
+      toValue: 0,
+      duration: 300,
+    }).start()
+  }
+
+  const handleSingUpPage = useCallback(() => {
+    dispatch(setRegister())
+  }, [])
+
+  const handleLoginPage = useCallback(() => {
+    dispatch(setLogIn())
+  }, [])
+
+  useEffect(() => {
+    fadeOut()
+    if (loginPage === 'register') {
+      setCardTitle('Registration')
+      setButtonFunction(handleLoginPage)
+    }
+    if (loginPage === 'forgetPassword') {
+      setCardTitle('Reset Password')
+      setButtonFunction(handleLoginPage)
+    }
+    if (loginPage === 'login') {
+      setCardTitle('Authentication')
+      setButtonFunction(handleSingUpPage)
+    }
+    fadeIn()
+  }, [loginPage, handleLoginPage, handleSingUpPage])
 
   useEffect(() => {
     getToken().then((token) => {
@@ -48,30 +94,6 @@ const Login: FC<IProps> = ({ navigation }) => {
     })
   }, [getGames, setLoading, navigation])
 
-  const handleSingUpPage = () => {
-    dispatch(setRegister())
-  }
-
-  const handleLoginPage = () => {
-    dispatch(setLogIn())
-  }
-
-  let cardTitle
-  let buttonFunction
-
-  if (loginPage === 'register') {
-    cardTitle = 'Registration'
-    buttonFunction = handleLoginPage
-  }
-  if (loginPage === 'forgetPassword') {
-    cardTitle = 'Reset Password'
-    buttonFunction = handleLoginPage
-  }
-  if (loginPage === 'login') {
-    cardTitle = 'Authentication'
-    buttonFunction = handleSingUpPage
-  }
-
   return (
     <LoginPageWrapper>
       <ContentWrapper>
@@ -80,7 +102,11 @@ const Login: FC<IProps> = ({ navigation }) => {
             <LogoText>TGL</LogoText>
             <Marker />
           </LogoWrapper>
-          <TitleText>{cardTitle}</TitleText>
+          <Animated.Text
+            style={[{ fontSize: 35, color: '#707070', marginBottom: 26 }, { opacity: fadeAnim }]}
+          >
+            {cardTitle}
+          </Animated.Text>
           <LoginCard navigation={navigation} />
           <Button className={BUTTON_THEME.GHOST} onPress={buttonFunction}>
             <SignUpText>

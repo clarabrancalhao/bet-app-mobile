@@ -22,11 +22,12 @@ export const Input = styled(TextInput)`
 
 export const ForgetPasswordText = styled(Text)`
   padding-top: 22px;
-  padding-right: 20px;
+  margin-right: 20px;
   text-align: right;
   color: #c1c1c1;
   font-weight: 400;
   font-size: 17px;
+  align-self: flex-end;
 `
 
 export const ErrorText = styled(Text)`
