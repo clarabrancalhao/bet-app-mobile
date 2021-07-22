@@ -1,7 +1,7 @@
 import React, { useState, FC } from 'react'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons'
-import { NativeSyntheticEvent, NavigatorIOS, TextInputChangeEventData } from 'react-native'
+import { NativeSyntheticEvent, TextInputChangeEventData, Animated } from 'react-native'
 
 import { colors, ILogin } from '../../utils'
 import {
@@ -10,7 +10,7 @@ import {
   setForgetPassword,
   setPasswordError,
 } from '../../modules/login/actions'
-import { Card, ContentWrapper, ForgetPasswordText, Input, SubmitText, Paragraph } from './styles'
+import { ContentWrapper, ForgetPasswordText, Input, SubmitText, Paragraph } from './styles'
 import { BUTTON_THEME } from '../Button/styles'
 import Button from '../Button'
 import useValidate from '../../hooks/useValidate'
@@ -71,8 +71,20 @@ const LoginCard: FC<IProps> = ({ navigation }) => {
   const handleForgetPasswordPage = () => {
     dispatch(setForgetPassword())
   }
+
   return (
-    <Card>
+    <Animated.View
+      style={[
+        {
+          borderWidth: 1,
+          borderColor: '#dddddd',
+          borderRadius: 24,
+          backgroundColor: '#ffffff',
+          width: 306,
+        },
+        {},
+      ]}
+    >
       <ContentWrapper>
         <Paragraph>Email</Paragraph>
         <Input onBlur={handleEmailValidation} onChange={handleEmailError} />
@@ -100,7 +112,7 @@ const LoginCard: FC<IProps> = ({ navigation }) => {
           <AntDesign name="arrowright" size={32} color={colors.TGL} />
         </SubmitText>
       </Button>
-    </Card>
+    </Animated.View>
   )
 }
 

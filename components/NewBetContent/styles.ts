@@ -3,9 +3,16 @@ import { View, Text } from 'react-native'
 import { colors } from '../../utils'
 
 export const ContentWrapper = styled(View)`
-  margin: 0 20px;
+  margin: 0 20px 12px;
   background-color: ${colors.BACKGROUND};
   opacity: 0.8;
+`
+
+export const NumbersWrapper = styled(View)`
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 20px 0;
 `
 
 export const Title = styled(Text)`

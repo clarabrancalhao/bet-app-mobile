@@ -13,6 +13,7 @@ const useCompleteGame = () => {
         text1: 'Ops!',
         text2: `Your game is already completed!`,
       })
+      return
     }
     const randomNumbers = getRandomNumbers(selectedGame, selectedNumbers)
     dispatch(completeGame(randomNumbers))

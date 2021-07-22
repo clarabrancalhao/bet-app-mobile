@@ -35,6 +35,7 @@ export default function Numbers() {
             key={number}
             value={number}
             color={selectedGame.color}
+            size={59}
             className={
               !selectedNumbers?.find((selected: number) => selected === number)
                 ? BUTTON_THEME.NUMBER_CELL

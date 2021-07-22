@@ -23,6 +23,7 @@ export const DrawerWrapper = styled(View)`
   height: 100%;
   flex: 1;
   justify-content: space-between;
+  background-color: #ffffff;
 `
 
 export const CloseWrapper = styled(View)`

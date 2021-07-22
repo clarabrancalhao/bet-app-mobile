@@ -13,7 +13,6 @@ export const BUTTON_THEME = {
   GREEN_BORDER: 'green-border',
   NUMBER_CELL: 'number-cell',
   NUMBER_CELL_ACTIVE: 'number-cell active',
-  SMALL_CELL: 'small-cell',
 }
 
 export const GamesButton = styled(TouchableOpacity)<IProps>`
@@ -60,22 +59,11 @@ export const GreenBorderButton = styled(TouchableOpacity)`
 export const NumberCell = styled(TouchableOpacity)<IProps>`
   border-radius: 100px;
   background: ${({ className, color }) => (className === 'number-cell' ? '#adc0c4' : color)};
-  width: 59px;
-  height: 59px;
-  color: #ffffff;
+  width: ${({ size }) => `${size}px`};
+  height: ${({ size }) => `${size}px`};
   justify-content: center;
   align-items: center;
-  margin: 5px;
-`
-export const SmallCell = styled(TouchableOpacity)<IProps>`
-  border-radius: 100px;
-  background: ${({ color }) => color};
-  max-width: 40px;
-  height: 40px;
-  color: #ffffff;
-  justify-content: center;
-  align-items: center;
-  margin: 5px;
+  margin: ${({ size }) => (size === 40 ? '2px' : '5px')};
 `
 
 export const GhostButton = styled(TouchableOpacity)`

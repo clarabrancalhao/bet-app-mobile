@@ -22,6 +22,7 @@ import {
   GreenText,
   WhiteText,
   ButtonText,
+  NumbersWrapper,
 } from './styles'
 import Toast from 'react-native-toast-message'
 
@@ -67,23 +68,20 @@ export default function index() {
       <SelectGameCard type="select" />
       {!!numbers.length && (
         <>
-          <FlatGrid
-            itemDimension={40}
-            style={{ flex: 0, marginTop: 14, marginBottom: 14 }}
-            data={numbers}
-            keyExtractor={(number) => `${number}`}
-            renderItem={({ item: number }) => (
+          <NumbersWrapper>
+            {numbers.map((number: number) => (
               <Button
                 key={number}
                 value={number}
                 color={selectedGame.color}
-                className={BUTTON_THEME.SMALL_CELL}
+                size={40}
+                className={BUTTON_THEME.NUMBER_CELL_ACTIVE}
                 onPress={() => handleRemoveNumber(number)}
               >
                 <ButtonText>{number < 10 ? '0' + number : number}</ButtonText>
               </Button>
-            )}
-          />
+            ))}
+          </NumbersWrapper>
           <ButtonsWrapper>
             <Button
               className={BUTTON_THEME.GREEN_BORDER}
@@ -115,12 +113,7 @@ export default function index() {
       {!numbers.length && (
         <>
           <Subtitle>Fill your bet</Subtitle>
-          <SmallText>
-            Mark as <SmallBoldText>many numbers</SmallBoldText> as you want up to a{' '}
-            <SmallBoldText>
-              maximum of {selectedGame ? selectedGame['max-number'] : null}
-            </SmallBoldText>
-          </SmallText>
+          <SmallText>{selectedGame.description}</SmallText>
         </>
       )}
     </ContentWrapper>

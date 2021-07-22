@@ -1,7 +1,7 @@
 import React, { useRef, useCallback } from 'react'
 import { Ionicons, AntDesign } from '@expo/vector-icons'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
-import { DrawerLayoutAndroid, ScrollView } from 'react-native-gesture-handler'
+import { ScrollView, DrawerLayout } from 'react-native-gesture-handler'
 
 import Numbers from '../../components/Numbers'
 import Header from '../../components/Header'
@@ -63,7 +63,12 @@ export default function index({ navigation }: any) {
   const navigationView = () => (
     <DrawerWrapper>
       <CloseWrapper>
-        <Button className={BUTTON_THEME.GHOST} onPress={() => {}}>
+        <Button
+          className={BUTTON_THEME.GHOST}
+          onPress={() => {
+            drawer.current.closeDrawer()
+          }}
+        >
           <AntDesign name="close" size={24} color={colors.TGL} />
         </Button>
       </CloseWrapper>
@@ -108,9 +113,9 @@ export default function index({ navigation }: any) {
   }, [])
 
   return (
-    <DrawerLayoutAndroid
-      renderNavigationView={navigationView}
+    <DrawerLayout
       ref={drawer}
+      renderNavigationView={navigationView}
       drawerWidth={265}
       drawerPosition={'right'}
     >
@@ -118,6 +123,6 @@ export default function index({ navigation }: any) {
         <Header page="newBet" drawer={handleOpenDrawer} navigation={navigation} />
         <Numbers />
       </Wrapper>
-    </DrawerLayoutAndroid>
+    </DrawerLayout>
   )
 }

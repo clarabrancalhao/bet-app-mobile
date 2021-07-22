@@ -1,12 +1,6 @@
 import styled from 'styled-components'
 import { View, Text, TextInput } from 'react-native'
 
-export const Card = styled(View)`
-  border: 1px solid #dddddd;
-  border-radius: 24px;
-  background-color: #ffffff;
-  width: 306px;
-`
 export const ContentWrapper = styled(View)`
   flex-direction: column;
   padding: 0 30px;

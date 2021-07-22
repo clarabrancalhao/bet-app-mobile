@@ -6,7 +6,6 @@ import {
   GreenBorderButton,
   NumberCell,
   SaveCartButton,
-  SmallCell,
 } from './styles'
 
 export interface IProps {
@@ -15,15 +14,16 @@ export interface IProps {
   color?: string
   id?: string
   value?: number
+  size?: number
 }
 
-const Button: FC<IProps> = ({ onPress, className, id, value, color, children }) => {
+const Button: FC<IProps> = ({ onPress, className, id, value, color, children, size }) => {
   if (className === 'ghost') {
     return <GhostButton onPress={onPress}>{children}</GhostButton>
   }
   if (className === 'number-cell' || className === 'number-cell active') {
     return (
-      <NumberCell onPress={onPress} color={color} className={className}>
+      <NumberCell size={size} onPress={onPress} color={color} className={className}>
         {children}
       </NumberCell>
     )
@@ -36,13 +36,6 @@ const Button: FC<IProps> = ({ onPress, className, id, value, color, children }) 
   }
   if (className === 'add-to-cart') {
     return <AddToCartButton onPress={onPress}>{children}</AddToCartButton>
-  }
-  if (className === 'small_cell') {
-    return (
-      <SmallCell color={color} className={className} onPress={onPress}>
-        {children}
-      </SmallCell>
-    )
   } else {
     return (
       <GamesButton color={color} className={className} id={id} onPress={onPress}>
