@@ -9,6 +9,13 @@ export const ContentWrapper = styled(View)`
   border-bottom-width: 1px;
 `
 
+export const Card = styled(View)`
+  border: 1px solid #dddddd;
+  border-radius: 24px;
+  background-color: #ffffff;
+  width: 306px;
+`
+
 export const Paragraph = styled(Text)`
   color: #9d9d9d;
   font-size: 17px;

@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, FC, useMemo } from 'react'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons'
-import { Animated } from 'react-native'
-import { FC } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Animated, { withTiming, useSharedValue, useAnimatedStyle } from 'react-native-reanimated'
 
 import { BUTTON_THEME } from '../../components/Button/styles'
 import Button from '../../components/Button'
@@ -23,6 +22,7 @@ import {
 import { colors } from '../../utils'
 import { getGames } from '../../modules/games/actions'
 import { getSavedGames } from '../../modules/cart/actions'
+import { duration } from 'moment'
 
 interface IProps {
   navigation: any
@@ -32,55 +32,55 @@ const Login: FC<IProps> = ({ navigation }) => {
   const dispatch = useDispatch()
   const loginPage = useSelector((state: RootStateOrAny) => state.login.loginPage)
 
-  const [cardTitle, setCardTitle] = useState('')
-  const [buttonFunction, setButtonFunction] = useState(() => {})
+  const titleOpacity = useSharedValue(1)
 
-  const fadeAnim = useRef(new Animated.Value(0)).current
+  const titleStyle = useAnimatedStyle(() => ({ opacity: titleOpacity.value }))
 
   const getToken = async () => {
     return await AsyncStorage.getItem('token')
   }
 
-  const fadeIn = () => {
-    Animated.timing(fadeAnim, {
-      useNativeDriver: false,
-      toValue: 1,
-      duration: 300,
-    }).start()
-  }
-
-  const fadeOut = () => {
-    Animated.timing(fadeAnim, {
-      useNativeDriver: false,
-      toValue: 0,
-      duration: 300,
-    }).start()
-  }
-
-  const handleSingUpPage = useCallback(() => {
+  const handleOpacity = useCallback((opacity0, opacity1) => {
+    opacity0()
     dispatch(setRegister())
+    opacity1()
   }, [])
 
   const handleLoginPage = useCallback(() => {
     dispatch(setLogIn())
   }, [])
 
-  useEffect(() => {
-    fadeOut()
+  const [cardTitle, setCardTitle] = useState('Authentication')
+
+  const changeTitle = () => {
     if (loginPage === 'register') {
       setCardTitle('Registration')
-      setButtonFunction(handleLoginPage)
     }
     if (loginPage === 'forgetPassword') {
       setCardTitle('Reset Password')
-      setButtonFunction(handleLoginPage)
     }
     if (loginPage === 'login') {
       setCardTitle('Authentication')
-      setButtonFunction(handleSingUpPage)
     }
-    fadeIn()
-  }, [loginPage, handleLoginPage, handleSingUpPage])
+  }
+
+  const buttonFunction = useMemo(() => {
+    if (loginPage === 'register') {
+      return handleLoginPage
+    }
+    if (loginPage === 'forgetPassword') {
+      return handleLoginPage
+    }
+    if (loginPage === 'login') {
+      return handleOpacity
+    }
+  }, [loginPage])
+
+  useEffect(() => {
+    titleOpacity.value = withTiming(0, { duration: 500 })
+    changeTitle()
+    titleOpacity.value = withTiming(1, { duration: 500 })
+  }, [loginPage])
 
   useEffect(() => {
     getToken().then((token) => {
@@ -102,12 +102,10 @@ const Login: FC<IProps> = ({ navigation }) => {
             <LogoText>TGL</LogoText>
             <Marker />
           </LogoWrapper>
-          <Animated.Text
-            style={[{ fontSize: 35, color: '#707070', marginBottom: 26 }, { opacity: fadeAnim }]}
-          >
+          <Animated.Text style={[{ fontSize: 35, color: '#707070', marginBottom: 26 }, titleStyle]}>
             {cardTitle}
           </Animated.Text>
-          <LoginCard navigation={navigation} />
+          <LoginCard navigation={navigation} setOpacity={handleOpacity} />
           <Button className={BUTTON_THEME.GHOST} onPress={buttonFunction}>
             <SignUpText>
               {loginPage === 'login' ? 'Sign Up' : 'Back'}

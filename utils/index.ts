@@ -44,4 +44,4 @@ export const formatCurrency = function (amount: string) {
   return 'R$' + parseFloat(amount).toFixed(2).replace(/\./, ',')
 }
 
-export const baseUrl = 'https://application-mock-server.loca.lt/'
+export const baseUrl = 'https://cold-shrimp-79.loca.lt/'
