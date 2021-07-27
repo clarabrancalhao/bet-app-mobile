@@ -14,7 +14,7 @@ interface IState {
   emailError: boolean
   passwordError: boolean
   loginPage: string
-  isLoading: boolean | null
+  isLoading: boolean
 }
 
 interface IAction {
@@ -27,7 +27,7 @@ const initialState = {
   emailError: false,
   passwordError: false,
   loginPage: 'login',
-  isLoading: true,
+  isLoading: false,
 }
 
 function login(state: IState = initialState, action: IAction) {

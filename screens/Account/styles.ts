@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { View, Text, TextInput } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { colors } from '../../utils'
 
 export const Wrapper = styled(View)`
@@ -33,4 +33,27 @@ export const Title = styled(Text)`
 
 export const InputWrapper = styled(View)`
   margin-bottom: 20px;
+  margin-top: 24px;
+`
+
+export const SaveButton = styled(TouchableOpacity)`
+  border-radius: 12px;
+  background-color: ${colors.TGL};
+  padding: 12px 32px;
+  align-items: center;
+  justify-content: center;
+`
+
+export const CancelButton = styled(TouchableOpacity)`
+  border-radius: 12px;
+  border: 2px solid ${colors.TGL};
+  padding: 12px 24px;
+  align-items: center;
+  justify-content: center;
+`
+
+export const ButtonsWrapper = styled(View)`
+  margin-top: 60px;
+  flex-direction: row;
+  justify-content: space-around;
 `

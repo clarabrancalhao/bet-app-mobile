@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
-import { KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native'
+import { KeyboardAvoidingView, Platform, SafeAreaView, View } from 'react-native'
 import { Provider } from 'react-redux'
 import Toast from 'react-native-toast-message'
 
@@ -13,8 +13,8 @@ export default function App() {
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS == 'ios' ? 0 : 20}
-        enabled={Platform.OS === 'ios' ? true : false}
+        keyboardVerticalOffset={Platform.OS == 'ios' ? 20 : 20}
+        enabled={true}
       >
         <SafeAreaView style={{ flex: 1 }}>
           <Router />

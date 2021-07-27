@@ -1,9 +1,8 @@
 import styled from 'styled-components'
-import { View, Text } from 'react-native'
+import { View, Text, Dimensions } from 'react-native'
 import { colors } from '../../utils'
 
 export const ContentWrapper = styled(View)`
-  margin: 0 20px 12px;
   background-color: ${colors.BACKGROUND};
   opacity: 0.8;
 `
@@ -11,7 +10,6 @@ export const ContentWrapper = styled(View)`
 export const NumbersWrapper = styled(View)`
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
   margin: 20px 0;
 `
 
@@ -42,6 +40,7 @@ export const SmallText = styled(Text)`
   font-size: 17px;
   font-style: italic;
   color: ${colors.TEXT};
+  margin-bottom: 15px;
 `
 
 export const SmallBoldText = styled(Text)`
@@ -54,8 +53,7 @@ export const SmallBoldText = styled(Text)`
 export const ButtonsWrapper = styled(View)`
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
-  padding: 0 20px;
+  width: ${Dimensions.get('screen').width - 40};
 `
 export const GreenText = styled(Text)`
   font-weight: bold;

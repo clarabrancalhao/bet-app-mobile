@@ -26,10 +26,10 @@ import { EmailError, PasswordError } from '../ErrorMessages'
 
 interface IProps {
   navigation: any
-  setOpacity: any
+  opacity: any
 }
 
-const LoginCard: FC<IProps> = ({ navigation, setOpacity }) => {
+const LoginCard: FC<IProps> = ({ navigation, opacity }) => {
   const dispatch = useDispatch()
   const handleValidation = useValidate()
   const handleAuthentication = useAuthenticate()
@@ -40,10 +40,16 @@ const LoginCard: FC<IProps> = ({ navigation, setOpacity }) => {
   const height = useMemo(() => {
     if (loginPage === 'forgetPassword') {
       if (login.emailError) {
-        return 250
-      } else {
         return 225
+      } else {
+        return 175
       }
+    }
+    if (loginPage === 'login') {
+      if (login.emailError || login.passwordError) {
+        return 375
+      }
+      return 300
     } else {
       if (
         (login.emailError && !login.passwordError) ||
@@ -52,45 +58,32 @@ const LoginCard: FC<IProps> = ({ navigation, setOpacity }) => {
         return 375
       }
       if (login.emailError && login.passwordError) {
-        return 400
+        return 425
       }
 
       return 350
     }
-  }, [loginPage])
+  }, [loginPage, login])
 
   const cardHeight = useSharedValue(height)
-  const cardOpacity = useSharedValue(1)
 
   const cardStyle = useAnimatedStyle(() => {
-    return { height: cardHeight.value, opacity: cardOpacity.value }
+    return { height: cardHeight.value, opacity: opacity.value }
   })
 
   useEffect(() => {
     cardHeight.value = withTiming(height, { duration: 500 })
-  }, [loginPage])
+  }, [loginPage, login])
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const handleEmailValidation = () => {
-    handleValidation(email, 'email', setEmailError)
+    handleValidation(email.toLowerCase(), 'email', setEmailError)
   }
 
-  const setOpacity0 = useCallback(() => {
-    cardOpacity.value = withTiming(0, { duration: 200 })
-  }, [cardOpacity])
-
-  const setOpacity1 = useCallback(() => {
-    cardOpacity.value = withTiming(0, { duration: 200 })
-  }, [])
-
-  useEffect(() => {
-    setOpacity(setOpacity0, setOpacity1)
-  }, [])
-
   const handleEmailError = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
-    setEmail(event.nativeEvent.text)
+    setEmail(event.nativeEvent.text.toLowerCase())
     if (login.emailError) {
       handleEmailValidation()
     }
@@ -146,7 +139,11 @@ const LoginCard: FC<IProps> = ({ navigation, setOpacity }) => {
       )}
       <ContentWrapper>
         <Paragraph>Email</Paragraph>
-        <Input onBlur={handleEmailValidation} onChange={handleEmailError} />
+        <Input
+          textContentType="emailAddress"
+          onBlur={handleEmailValidation}
+          onChange={handleEmailError}
+        />
       </ContentWrapper>
       {login.emailError && <EmailError />}
       {loginPage !== 'forgetPassword' && (

@@ -4,13 +4,14 @@ import 'react-native-gesture-handler'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons, FontAwesome } from '@expo/vector-icons'
-import { Image } from 'react-native'
+import { Image, ActivityIndicator, View } from 'react-native'
 
 import Home from './screens/Home'
 import Login from './screens/Login'
 import NewBet from './screens/NewBet'
 import Account from './screens/Account'
 import { colors } from './utils'
+import { RootStateOrAny, useSelector } from 'react-redux'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()

@@ -6,12 +6,14 @@ import Toast from 'react-native-toast-message'
 import { setLoading, setUserLogged } from '../modules/login/actions'
 import { getGames } from '../modules/games/actions'
 import { baseUrl } from '../utils'
+import { getSavedGames } from '../modules/cart/actions'
 
 const useAuthenticate = () => {
   const loginPage: string = useSelector((state: RootStateOrAny) => state.login.loginPage)
   const dispatch = useDispatch()
 
   const handleAuthentication = async (email: string, password: string, navigation: any) => {
+    dispatch(setLoading(true))
     try {
       if (loginPage === 'register') {
         await axios.post(`${baseUrl}users`, { email, password })
@@ -22,16 +24,20 @@ const useAuthenticate = () => {
       })
       await AsyncStorage.setItem('token', response.data.token)
       await AsyncStorage.setItem('user_id', `${response.data.user_id}`)
-      dispatch(setUserLogged(true))
       if (response.data.token) {
-        dispatch(setLoading(true))
+        dispatch(setUserLogged(true))
         dispatch(getGames())
-        dispatch(setLoading(false))
+        dispatch(getSavedGames())
         navigation.push('Home')
+        return
       } else {
         throw new Error()
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+    } finally {
+      dispatch(setLoading(false))
+    }
     Toast.show({
       type: 'error',
       text1: 'Ops!',

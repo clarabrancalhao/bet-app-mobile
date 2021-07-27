@@ -21,8 +21,7 @@ import {
 } from './styles'
 import { colors } from '../../utils'
 import { getGames } from '../../modules/games/actions'
-import { getSavedGames } from '../../modules/cart/actions'
-import { duration } from 'moment'
+import { ActivityIndicator, View } from 'react-native'
 
 interface IProps {
   navigation: any
@@ -31,23 +30,36 @@ interface IProps {
 const Login: FC<IProps> = ({ navigation }) => {
   const dispatch = useDispatch()
   const loginPage = useSelector((state: RootStateOrAny) => state.login.loginPage)
+  const loading = useSelector((state: RootStateOrAny) => state.login.isLoading)
 
-  const titleOpacity = useSharedValue(1)
+  const cardOpacity = useSharedValue(1)
 
-  const titleStyle = useAnimatedStyle(() => ({ opacity: titleOpacity.value }))
+  const titleStyle = useAnimatedStyle(() => ({ opacity: cardOpacity.value }))
 
   const getToken = async () => {
     return await AsyncStorage.getItem('token')
   }
 
-  const handleOpacity = useCallback((opacity0, opacity1) => {
-    opacity0()
-    dispatch(setRegister())
-    opacity1()
+  const setOpacity0 = useCallback(() => {
+    cardOpacity.value = withTiming(0, { duration: 200 })
+  }, [cardOpacity])
+
+  const setOpacity1 = useCallback(() => {
+    cardOpacity.value = withTiming(1, { duration: 200 })
+  }, [cardOpacity])
+
+  const handleOpacity = useCallback(() => {
+    setOpacity0()
+    setTimeout(() => dispatch(setRegister()), 100)
+    changeTitle()
+    setTimeout(setOpacity1, 200)
   }, [])
 
   const handleLoginPage = useCallback(() => {
-    dispatch(setLogIn())
+    setOpacity0()
+    setTimeout(() => dispatch(setLogIn()), 100)
+    changeTitle()
+    setTimeout(setOpacity1, 200)
   }, [])
 
   const [cardTitle, setCardTitle] = useState('Authentication')
@@ -76,23 +88,13 @@ const Login: FC<IProps> = ({ navigation }) => {
     }
   }, [loginPage])
 
-  useEffect(() => {
-    titleOpacity.value = withTiming(0, { duration: 500 })
-    changeTitle()
-    titleOpacity.value = withTiming(1, { duration: 500 })
-  }, [loginPage])
-
-  useEffect(() => {
-    getToken().then((token) => {
-      if (token) {
-        dispatch(setLoading(true))
-        dispatch(getGames())
-        dispatch(getSavedGames())
-        navigation.push('Home')
-        dispatch(setLoading(false))
-      }
-    })
-  }, [getGames, setLoading, navigation])
+  if (loading) {
+    return (
+      <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={colors.TGL} size="large" />
+      </View>
+    )
+  }
 
   return (
     <LoginPageWrapper>
@@ -105,7 +107,7 @@ const Login: FC<IProps> = ({ navigation }) => {
           <Animated.Text style={[{ fontSize: 35, color: '#707070', marginBottom: 26 }, titleStyle]}>
             {cardTitle}
           </Animated.Text>
-          <LoginCard navigation={navigation} setOpacity={handleOpacity} />
+          <LoginCard navigation={navigation} opacity={cardOpacity} />
           <Button className={BUTTON_THEME.GHOST} onPress={buttonFunction}>
             <SignUpText>
               {loginPage === 'login' ? 'Sign Up' : 'Back'}

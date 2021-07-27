@@ -24,9 +24,11 @@ const Header = ({ page, drawer, navigation }: IProps) => {
     navigation.push('Login')
   }
 
+  console.log({ navigation: navigation.push })
+
   return (
     <Wrapper>
-      <LogoWrapper>
+      <LogoWrapper onPress={() => navigation.push('Home')}>
         <LogoText>TGL</LogoText>
         <Marker />
       </LogoWrapper>

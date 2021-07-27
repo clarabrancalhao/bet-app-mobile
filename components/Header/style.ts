@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import { colors } from '../../utils'
 
@@ -12,7 +12,7 @@ export const Wrapper = styled(View)`
   justify-content: space-between;
 `
 
-export const LogoWrapper = styled(View)`
+export const LogoWrapper = styled(TouchableOpacity)`
   align-items: center;
   margin-left: 20px;
 `

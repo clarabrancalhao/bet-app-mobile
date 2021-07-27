@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList } from 'react-native'
+import { Animated } from 'react-native'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import uuid from 'react-native-uuid'
 import { FlatGrid } from 'react-native-super-grid'
@@ -25,6 +25,9 @@ import {
   NumbersWrapper,
 } from './styles'
 import Toast from 'react-native-toast-message'
+import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { colors } from '../../utils'
+import { useEffect } from 'react'
 
 export default function index() {
   const selectedGame = useSelector((state: RootStateOrAny) => state.games.selectedGame)
@@ -32,6 +35,9 @@ export default function index() {
   const handleRemoveNumber = useSelectNumber()
   const handleCompleteGame = useCompleteGame()
   const dispatch = useDispatch()
+
+  const containerHeight = useSharedValue(400)
+  const containerStyle = useAnimatedStyle(() => ({ height: containerHeight.value }))
 
   const handleClearGame = () => {
     dispatch(clearGame())
@@ -61,8 +67,31 @@ export default function index() {
     }
   }
 
+  useEffect(() => {
+    if (numbers.length === 0) {
+      containerHeight.value = withTiming(400, { duration: 300 })
+      return
+    }
+    if (numbers.length < 9) {
+      containerHeight.value = withTiming(350, { duration: 300 })
+    } else {
+      containerHeight.value = withTiming(375, { duration: 300 })
+    }
+  }, [numbers])
+
   return (
-    <ContentWrapper>
+    <Animated.View
+      style={[
+        {
+          marginLeft: 20,
+          marginRight: 20,
+          marginBottom: 12,
+          backgroundColor: colors.BACKGROUND,
+          opacity: 0.8,
+        },
+        containerStyle,
+      ]}
+    >
       <Title>NEW BET FOR {selectedGame?.type.toUpperCase()}</Title>
       <Paragraph>Choose a game</Paragraph>
       <SelectGameCard type="select" />
@@ -116,6 +145,6 @@ export default function index() {
           <SmallText>{selectedGame.description}</SmallText>
         </>
       )}
-    </ContentWrapper>
+    </Animated.View>
   )
 }
