@@ -11,7 +11,6 @@ import Login from './screens/Login'
 import NewBet from './screens/NewBet'
 import Account from './screens/Account'
 import { colors } from './utils'
-import { RootStateOrAny, useSelector } from 'react-redux'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()

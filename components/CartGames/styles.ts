@@ -13,6 +13,7 @@ export const Marker = styled(View)<IProps>`
 export const CardWrapper = styled(View)`
   flex-direction: row;
   margin-top: 25px;
+  width: 100%;
 `
 
 export const GameContentWrapper = styled(View)`

@@ -4,7 +4,6 @@ import { colors } from '../../utils'
 
 export const ContentWrapper = styled(View)`
   background-color: ${colors.BACKGROUND};
-  opacity: 0.8;
 `
 
 export const NumbersWrapper = styled(View)`
@@ -53,7 +52,7 @@ export const SmallBoldText = styled(Text)`
 export const ButtonsWrapper = styled(View)`
   flex-direction: row;
   justify-content: space-between;
-  width: ${Dimensions.get('screen').width - 40};
+  width: ${Dimensions.get('screen').width - 40}px;
 `
 export const GreenText = styled(Text)`
   font-weight: bold;

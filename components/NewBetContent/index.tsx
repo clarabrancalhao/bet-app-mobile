@@ -1,5 +1,4 @@
-import React from 'react'
-import { Animated } from 'react-native'
+import React, { useCallback } from 'react'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import uuid from 'react-native-uuid'
 import { FlatGrid } from 'react-native-super-grid'
@@ -25,26 +24,38 @@ import {
   NumbersWrapper,
 } from './styles'
 import Toast from 'react-native-toast-message'
-import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { colors } from '../../utils'
 import { useEffect } from 'react'
 
-export default function index() {
+export default function index(containerOpacity: any) {
   const selectedGame = useSelector((state: RootStateOrAny) => state.games.selectedGame)
   const numbers = useSelector((state: RootStateOrAny) => state.cart.numbers)
   const handleRemoveNumber = useSelectNumber()
   const handleCompleteGame = useCompleteGame()
   const dispatch = useDispatch()
 
-  const containerHeight = useSharedValue(400)
-  const containerStyle = useAnimatedStyle(() => ({ height: containerHeight.value }))
+  const containerStyle = useAnimatedStyle(() => {
+    return { opacity: containerOpacity.value }
+  })
+
+  const setOpacity0 = useCallback(() => {
+    containerOpacity.value = withTiming(0, { duration: 300 })
+  }, [containerOpacity])
+
+  const setOpacity1 = useCallback(() => {
+    containerOpacity.value = withTiming(0.8, { duration: 300 })
+  }, [containerOpacity])
 
   const handleClearGame = () => {
-    dispatch(clearGame())
+    setOpacity0()
+    setTimeout(() => dispatch(clearGame()), 200)
+    setTimeout(setOpacity1, 300)
   }
 
   const handleAddToCart = () => {
     if (numbers.length === selectedGame['max-number']) {
+      setOpacity0()
       dispatch(
         addGameToCart({
           id: uuid.v4(),
@@ -57,7 +68,8 @@ export default function index() {
           'min-cart-value': selectedGame['min-cart-value'],
         })
       )
-      dispatch(clearGame())
+      setTimeout(() => dispatch(clearGame()), 200)
+      setTimeout(setOpacity1, 300)
     } else {
       Toast.show({
         type: 'error',
@@ -67,17 +79,15 @@ export default function index() {
     }
   }
 
-  useEffect(() => {
-    if (numbers.length === 0) {
-      containerHeight.value = withTiming(400, { duration: 300 })
+  const handleRemoveOpacity = (number: number) => {
+    if (numbers.length === 1) {
+      setOpacity0()
+      setTimeout(() => handleRemoveNumber(number), 200)
+      setTimeout(setOpacity1, 300)
       return
     }
-    if (numbers.length < 9) {
-      containerHeight.value = withTiming(350, { duration: 300 })
-    } else {
-      containerHeight.value = withTiming(375, { duration: 300 })
-    }
-  }, [numbers])
+    handleRemoveNumber(number)
+  }
 
   return (
     <Animated.View
@@ -87,7 +97,6 @@ export default function index() {
           marginRight: 20,
           marginBottom: 12,
           backgroundColor: colors.BACKGROUND,
-          opacity: 0.8,
         },
         containerStyle,
       ]}
@@ -105,7 +114,7 @@ export default function index() {
                 color={selectedGame.color}
                 size={40}
                 className={BUTTON_THEME.NUMBER_CELL_ACTIVE}
-                onPress={() => handleRemoveNumber(number)}
+                onPress={() => handleRemoveOpacity(number)}
               >
                 <ButtonText>{number < 10 ? '0' + number : number}</ButtonText>
               </Button>

@@ -1,7 +1,10 @@
-import React from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
+import React, { useState } from 'react'
 import { Text } from 'react-native'
+import Toast from 'react-native-toast-message'
 import Header from '../../components/Header'
-import { colors } from '../../utils'
+import { baseUrl, colors } from '../../utils'
 
 import {
   Wrapper,
@@ -15,6 +18,31 @@ import {
 } from './styles'
 
 export default function index({ navigation }: any) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+
+  const handleEmailChange = (event: any) => {
+    const text = event.nativeEvent.text.toLowerCase()
+    setEmail(text)
+  }
+
+  const handlePasswordChange = (event: any) => {
+    setPassword(event.nativeEvent.text)
+  }
+
+  const handleSaveChanges = async () => {
+    try {
+      const user_id = AsyncStorage.getItem('user_id')
+      axios.put(`${baseUrl}users`, { email, password, user_id })
+      setEmail('')
+      setPassword('')
+      Toast.show({ type: 'success', text1: 'Success!', text2: 'New password was saved!' })
+    } catch (err) {
+      Toast.show({ type: 'error', text1: 'Ops!', text2: 'Try again later' })
+    }
+  }
+
   return (
     <>
       <Header page="account" navigation={navigation} />
@@ -22,21 +50,21 @@ export default function index({ navigation }: any) {
         <Title>Account settings</Title>
         <InputWrapper>
           <Label>Change username</Label>
-          <Input />
+          <Input value={name} />
         </InputWrapper>
         <InputWrapper>
           <Label>Change e-mail</Label>
-          <Input />
+          <Input value={email} onChange={handleEmailChange} />
         </InputWrapper>
         <InputWrapper>
           <Label>Change password</Label>
-          <Input />
+          <Input value={password} onChange={handlePasswordChange} />
         </InputWrapper>
         <ButtonsWrapper>
-          <CancelButton onPress={() => {}}>
+          <CancelButton onPress={() => navigation.push('Home')}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: colors.TGL }}>Cancel</Text>
           </CancelButton>
-          <SaveButton onPress={() => {}}>
+          <SaveButton onPress={handleSaveChanges}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>Save</Text>
           </SaveButton>
         </ButtonsWrapper>

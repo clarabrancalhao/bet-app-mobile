@@ -8,6 +8,9 @@ import Button from '../Button'
 import NewBetContent from '../NewBetContent'
 import { BUTTON_THEME } from '../Button/styles'
 import { Wrapper, ButtonText } from './styles'
+import { useSharedValue, withTiming } from 'react-native-reanimated'
+import { useCallback } from 'react'
+import { duration } from 'moment'
 
 export default function Numbers() {
   const handleSelectNumber = useSelectNumber()
@@ -20,13 +23,38 @@ export default function Numbers() {
     [selectedGame]
   )
 
+  const containerOpacity = useSharedValue(0.8)
+
+  const setOpacity0 = useCallback(() => {
+    containerOpacity.value = withTiming(0, { duration: 200 })
+  }, [containerOpacity])
+
+  const setOpacity1 = useCallback(() => {
+    containerOpacity.value = withTiming(0.8, { duration: 200 })
+  }, [containerOpacity])
+
+  const handleSelectedNumber = (number: number) => {
+    if (selectedNumbers.length === 0) {
+      containerOpacity.value = withTiming(0, { duration: 300 })
+      setTimeout(() => handleSelectNumber(number), 200)
+      setTimeout(setOpacity1, 300)
+      return
+    }
+    if (selectedNumbers.length === 1 && selectedNumbers[0] === number) {
+      containerOpacity.value = withTiming(0, { duration: 300 })
+      setTimeout(() => handleSelectNumber(number), 200)
+      setTimeout(setOpacity1, 300)
+    }
+    handleSelectNumber(number)
+  }
+
   return (
     <Wrapper>
       <FlatList
         style={{ flexBasis: 0, marginBottom: 200 }}
         contentContainerStyle={{ alignItems: 'center' }}
         data={numbers}
-        ListHeaderComponent={NewBetContent}
+        ListHeaderComponent={() => NewBetContent(containerOpacity)}
         stickyHeaderIndices={[0]}
         numColumns={5}
         keyExtractor={(number: number) => `${number}`}
@@ -41,7 +69,7 @@ export default function Numbers() {
                 ? BUTTON_THEME.NUMBER_CELL
                 : BUTTON_THEME.NUMBER_CELL_ACTIVE
             }
-            onPress={() => handleSelectNumber(number)}
+            onPress={() => handleSelectedNumber(number)}
           >
             <ButtonText>{number < 10 ? '0' + number : number}</ButtonText>
           </Button>

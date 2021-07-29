@@ -24,8 +24,6 @@ const Header = ({ page, drawer, navigation }: IProps) => {
     navigation.push('Login')
   }
 
-  console.log({ navigation: navigation.push })
-
   return (
     <Wrapper>
       <LogoWrapper onPress={() => navigation.push('Home')}>

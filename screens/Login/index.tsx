@@ -48,33 +48,30 @@ const Login: FC<IProps> = ({ navigation }) => {
     cardOpacity.value = withTiming(1, { duration: 200 })
   }, [cardOpacity])
 
+  const cardTitle = useMemo(() => {
+    if (loginPage === 'register') {
+      return 'Registration'
+    }
+    if (loginPage === 'forgetPassword') {
+      return 'Reset Password'
+    }
+    if (loginPage === 'login') {
+      return 'Authentication'
+    }
+  }, [loginPage])
+
   const handleOpacity = useCallback(() => {
     setOpacity0()
     setTimeout(() => dispatch(setRegister()), 100)
-    changeTitle()
     setTimeout(setOpacity1, 200)
   }, [])
 
   const handleLoginPage = useCallback(() => {
     setOpacity0()
     setTimeout(() => dispatch(setLogIn()), 100)
-    changeTitle()
+
     setTimeout(setOpacity1, 200)
   }, [])
-
-  const [cardTitle, setCardTitle] = useState('Authentication')
-
-  const changeTitle = () => {
-    if (loginPage === 'register') {
-      setCardTitle('Registration')
-    }
-    if (loginPage === 'forgetPassword') {
-      setCardTitle('Reset Password')
-    }
-    if (loginPage === 'login') {
-      setCardTitle('Authentication')
-    }
-  }
 
   const buttonFunction = useMemo(() => {
     if (loginPage === 'register') {
