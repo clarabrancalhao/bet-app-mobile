@@ -1,7 +1,8 @@
 import React, { useState, FC, useEffect, useMemo, useCallback } from 'react'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
-import { AntDesign } from '@expo/vector-icons'
-import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native'
+import { AntDesign, Feather } from '@expo/vector-icons'
+import { NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
 import Animated, {
   withTiming,
   useAnimatedStyle,
@@ -16,7 +17,15 @@ import {
   setForgetPassword,
   setPasswordError,
 } from '../../modules/login/actions'
-import { ContentWrapper, ForgetPasswordText, Input, SubmitText, Paragraph, Card } from './styles'
+import {
+  ContentWrapper,
+  ForgetPasswordText,
+  Input,
+  SubmitText,
+  Paragraph,
+  Card,
+  InputWrapper,
+} from './styles'
 import { BUTTON_THEME } from '../Button/styles'
 import Button from '../Button'
 import useValidate from '../../hooks/useValidate'
@@ -33,6 +42,7 @@ const LoginCard: FC<IProps> = ({ navigation, opacity }) => {
   const dispatch = useDispatch()
   const handleValidation = useValidate()
   const handleAuthentication = useAuthenticate()
+  const [passwordVisibility, setPasswordVisibility] = useState({ button: 'eye-off', input: true })
 
   const login: ILogin = useSelector((state: RootStateOrAny) => state.login)
   const loginPage: string = useSelector((state: RootStateOrAny) => state.login.loginPage)
@@ -49,7 +59,7 @@ const LoginCard: FC<IProps> = ({ navigation, opacity }) => {
       if (login.emailError || login.passwordError) {
         return 375
       }
-      return 300
+      return 325
     } else {
       if (
         (login.emailError && !login.passwordError) ||
@@ -117,6 +127,19 @@ const LoginCard: FC<IProps> = ({ navigation, opacity }) => {
     dispatch(setForgetPassword())
   }
 
+  const handlePasswordVisibility = () => {
+    setPasswordVisibility((prevState) => {
+      if (prevState.button === 'eye') {
+        return {
+          button: 'eye-off',
+          input: true,
+        }
+      } else {
+        return { button: 'eye', input: false }
+      }
+    })
+  }
+
   return (
     <Animated.View
       style={[
@@ -149,11 +172,21 @@ const LoginCard: FC<IProps> = ({ navigation, opacity }) => {
       {loginPage !== 'forgetPassword' && (
         <ContentWrapper>
           <Paragraph>Password</Paragraph>
-          <Input
-            secureTextEntry={true}
-            onBlur={handlePasswordValidation}
-            onChange={handlePasswordError}
-          />
+          <InputWrapper>
+            <Input
+              secureTextEntry={passwordVisibility.input}
+              onBlur={handlePasswordValidation}
+              onChange={handlePasswordError}
+            />
+            <TouchableOpacity onPress={handlePasswordVisibility}>
+              <Feather
+                name={passwordVisibility.button}
+                size={24}
+                color={colors.TEXT}
+                style={{ marginBottom: 12 }}
+              />
+            </TouchableOpacity>
+          </InputWrapper>
         </ContentWrapper>
       )}
       {login.passwordError && <PasswordError />}

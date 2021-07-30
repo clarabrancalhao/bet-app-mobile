@@ -20,8 +20,9 @@ import { colors, formatCurrency, IGame } from '../../utils'
 import Button from '../../components/Button'
 import { BUTTON_THEME } from '../../components/Button/styles'
 import CartGames from '../../components/CartGames'
-import { saveCart } from '../../modules/cart/actions'
+import { clearCart, saveCart } from '../../modules/cart/actions'
 import Toast from 'react-native-toast-message'
+import { ActivityIndicator } from 'react-native'
 
 export default function index({ navigation }: any) {
   const drawer: any = useRef()
@@ -39,6 +40,7 @@ export default function index({ navigation }: any) {
     if (cartGames.length > 0) {
       if (totalAmount > (cartGames && cartGames[0]['min-cart-value'])) {
         dispatch(saveCart(parsedGames))
+        dispatch(clearCart())
         Toast.show({
           type: 'success',
           text1: 'Success!',
@@ -76,21 +78,23 @@ export default function index({ navigation }: any) {
         <Ionicons name="cart-outline" size={27} color={colors.TGL} style={{ marginRight: 12 }} />
         <Title>CART</Title>
       </TitleWrapper>
+
       <ScrollView>
         {cartGames.length === 0 && (
           <Title style={{ textAlign: 'center', marginTop: 150 }}>Your cart is empty</Title>
         )}
-        {cartGames.map((game) => (
-          <CartGames
-            key={game.id}
-            id={game.id}
-            color={game.color}
-            price={game.price}
-            numbers={game.selectedNumbers}
-            date={game.date}
-            type={game.type}
-          />
-        ))}
+        {cartGames.length > 0 &&
+          cartGames.map((game) => (
+            <CartGames
+              key={game.id}
+              id={game.id}
+              color={game.color}
+              price={game.price}
+              numbers={game.selectedNumbers}
+              date={game.date}
+              type={game.type}
+            />
+          ))}
       </ScrollView>
 
       <TotalWrapper>

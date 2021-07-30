@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Dispatch } from 'react'
 import Toast from 'react-native-toast-message'
 import { baseUrl, IGame, ISaveGame } from '../../utils/'
+import { setLoading } from '../login/actions'
 
 export const ADD_TO_CART = 'ADD_TO_CART'
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
@@ -53,12 +54,11 @@ export const clearCart = () => ({
 
 export const saveCart = (games: ISaveGame[]) => {
   return async (dispatch: Dispatch<any>) => {
-    dispatch(saveCartPending())
     try {
       const userId = await AsyncStorage.getItem('user_id')
       const token = await AsyncStorage.getItem('token')
 
-      const response = await axios.post(
+      await axios.post(
         `${baseUrl}users/${userId}/bets`,
         { bets: games },
         {
@@ -67,8 +67,6 @@ export const saveCart = (games: ISaveGame[]) => {
           },
         }
       )
-      dispatch(saveCartCompleted())
-      dispatch(clearCart())
     } catch (error) {
       console.log(error)
       dispatch(saveCartReject(error.message))
@@ -78,7 +76,7 @@ export const saveCart = (games: ISaveGame[]) => {
 
 export const getSavedGames = () => {
   return async (dispatch: Dispatch<any>) => {
-    dispatch(getGamesPending())
+    dispatch(setLoading(true))
     const userId = await AsyncStorage.getItem('user_id')
     const token = await AsyncStorage.getItem('token')
     axios
@@ -89,9 +87,11 @@ export const getSavedGames = () => {
       })
       .then((response) => {
         dispatch(getGamesCompleted(response.data))
+        dispatch(setLoading(false))
       })
       .catch((error) => {
         dispatch(getGamesReject(error))
+        dispatch(setLoading(false))
         Toast.show({
           type: 'error',
           text1: 'Ops!',

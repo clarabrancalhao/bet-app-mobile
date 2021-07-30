@@ -35,14 +35,13 @@ const useAuthenticate = () => {
       }
     } catch (err) {
       console.log(err)
-    } finally {
       dispatch(setLoading(false))
+      Toast.show({
+        type: 'error',
+        text1: 'Ops!',
+        text2: `E-mail or password incorrect`,
+      })
     }
-    Toast.show({
-      type: 'error',
-      text1: 'Ops!',
-      text2: `E-mail or password incorrect`,
-    })
   }
 
   return handleAuthentication

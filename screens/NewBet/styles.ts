@@ -46,7 +46,7 @@ export const TotalText = styled(Text)`
 `
 
 export const TotalWrapper = styled(View)`
-  margin: 0 24px;
+  margin: 12px 24px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

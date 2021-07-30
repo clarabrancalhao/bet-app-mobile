@@ -35,6 +35,8 @@ export const Numbers = styled(Text)`
   font-style: italic;
   color: ${colors.TEXT};
   margin-bottom: 4px;
+  margin-right: 12px;
+  flex-wrap: wrap;
 `
 
 export const PriceDateText = styled(Text)`
@@ -47,4 +49,5 @@ export const TrashWrapper = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: 87%;
 `

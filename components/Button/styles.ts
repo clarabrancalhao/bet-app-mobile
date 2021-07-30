@@ -63,7 +63,7 @@ export const NumberCell = styled(TouchableOpacity)<IProps>`
   height: ${({ size }) => `${size}px`};
   justify-content: center;
   align-items: center;
-  margin: ${({ size }) => (size === 40 ? '2px' : '5px')};
+  margin: ${({ size }) => (size === 40 ? '3px' : '8px')};
 `
 
 export const GhostButton = styled(TouchableOpacity)`

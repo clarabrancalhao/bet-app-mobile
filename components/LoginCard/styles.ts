@@ -25,6 +25,7 @@ export const Paragraph = styled(Text)`
 export const Input = styled(TextInput)`
   font-size: 16px;
   border: none;
+  width: 90%;
 `
 
 export const ForgetPasswordText = styled(Text)`
@@ -51,4 +52,8 @@ export const SubmitText = styled(Text)`
   font-size: 35px;
   color: #b5c401;
   text-align: center;
+`
+export const InputWrapper = styled(View)`
+  flex-direction: row;
+  align-items: center;
 `

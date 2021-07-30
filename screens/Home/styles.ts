@@ -23,3 +23,12 @@ export const Wrapper = styled(View)`
 export const ContentWrapper = styled(View)`
   margin: 26px 20px 0 20px;
 `
+
+export const NoGamesText = styled(Text)`
+  font-size: 22px;
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
+  color: ${colors.TITLE};
+  margin-top: 100px;
+`

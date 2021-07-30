@@ -33,8 +33,42 @@ export default function index({ navigation }: any) {
 
   const handleSaveChanges = async () => {
     try {
-      const user_id = AsyncStorage.getItem('user_id')
-      axios.put(`${baseUrl}users`, { email, password, user_id })
+      const user_id = await AsyncStorage.getItem('user_id')
+      const token = await AsyncStorage.getItem('token')
+      if (email !== '' && password !== '') {
+        await axios.put(
+          `${baseUrl}users`,
+          { email, password, user_id },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          }
+        )
+      }
+      if (email === '' && password !== '') {
+        await axios.put(
+          `${baseUrl}users`,
+          { password, user_id },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          }
+        )
+      }
+      if (password === '' && email !== '') {
+        await axios.put(
+          `${baseUrl}users`,
+          { email, user_id },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          }
+        )
+      }
+
       setEmail('')
       setPassword('')
       Toast.show({ type: 'success', text1: 'Success!', text2: 'New password was saved!' })
@@ -58,7 +92,7 @@ export default function index({ navigation }: any) {
         </InputWrapper>
         <InputWrapper>
           <Label>Change password</Label>
-          <Input value={password} onChange={handlePasswordChange} />
+          <Input secureTextEntry={true} value={password} onChange={handlePasswordChange} />
         </InputWrapper>
         <ButtonsWrapper>
           <CancelButton onPress={() => navigation.push('Home')}>
