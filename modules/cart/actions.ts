@@ -67,6 +67,8 @@ export const saveCart = (games: ISaveGame[]) => {
           },
         }
       )
+
+      getSavedGames()
     } catch (error) {
       console.log(error)
       dispatch(saveCartReject(error.message))

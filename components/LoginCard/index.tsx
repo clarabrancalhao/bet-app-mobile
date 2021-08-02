@@ -52,12 +52,15 @@ const LoginCard: FC<IProps> = ({ navigation, opacity }) => {
       if (login.emailError) {
         return 225
       } else {
-        return 175
+        return 200
       }
     }
     if (loginPage === 'login') {
+      if (login.emailError && login.passwordError) {
+        return 400
+      }
       if (login.emailError || login.passwordError) {
-        return 375
+        return 350
       }
       return 325
     } else {
