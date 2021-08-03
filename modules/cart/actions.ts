@@ -18,6 +18,7 @@ export const GET_GAMES_PENDING = 'GET_GAMES_PENDING'
 export const GET_GAMES_COMPLETED = 'GET_GAMES_COMPLETED'
 export const GET_GAMES_REJECTED = 'GET_GAMES_REJECTED'
 export const CLEAR_CART = 'CLEAR_CART'
+export const CLEAR_SAVED_GAMES = 'CLEAR_SAVED_GAMES'
 
 export const completeGame = (numbers: number[]) => ({
   type: COMPLETE_GAME,
@@ -68,7 +69,7 @@ export const saveCart = (games: ISaveGame[]) => {
         }
       )
 
-      getSavedGames()
+      getSavedGames(1)
     } catch (error) {
       console.log(error)
       dispatch(saveCartReject(error.message))
@@ -76,32 +77,72 @@ export const saveCart = (games: ISaveGame[]) => {
   }
 }
 
-export const getSavedGames = () => {
+export const getFilteredGames = (selectedFilters: IGame[], page: number) => {
   return async (dispatch: Dispatch<any>) => {
-    dispatch(setLoading(true))
-    const userId = await AsyncStorage.getItem('user_id')
-    const token = await AsyncStorage.getItem('token')
-    axios
-      .get(`${baseUrl}users/${userId}/bets`, {
+    if (selectedFilters.length === 3) {
+      getSavedGames(1)
+      return
+    }
+    const filters =
+      selectedFilters.length === 1
+        ? { game_id: selectedFilters[0].id }
+        : { game_id: selectedFilters[0].id, game_id_2: selectedFilters[1].id }
+    try {
+      dispatch(setLoading(true))
+      const userId = await AsyncStorage.getItem('user_id')
+      const token = await AsyncStorage.getItem('token')
+      const response = await axios.get(`${baseUrl}users/${userId}/bets`, filters, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
       })
-      .then((response) => {
-        dispatch(getGamesCompleted(response.data))
-        dispatch(setLoading(false))
+      dispatch(getGamesCompleted(response.data))
+      dispatch(setLoading(false))
+    } catch (error) {
+      dispatch(getGamesReject(error))
+      dispatch(setLoading(false))
+      Toast.show({
+        type: 'error',
+        text1: 'Ops!',
+        text2: 'Try again later.',
       })
-      .catch((error) => {
-        dispatch(getGamesReject(error))
-        dispatch(setLoading(false))
-        Toast.show({
-          type: 'error',
-          text1: 'Ops!',
-          text2: 'Try again later.',
-        })
-      })
+    }
   }
 }
+
+export const getSavedGames = (page: number) => {
+  return async (dispatch: Dispatch<any>) => {
+    try {
+      dispatch(setLoading(true))
+      const userId = await AsyncStorage.getItem('user_id')
+      const token = await AsyncStorage.getItem('token')
+
+      if (page === 1) {
+        dispatch(clearSavedGames())
+      }
+      const response = await axios.get(`${baseUrl}users/${userId}/bets?page=${page}`, {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      })
+
+      dispatch(getGamesCompleted(response.data.data))
+      dispatch(setLoading(false))
+    } catch (error) {
+      dispatch(getGamesReject(error))
+      dispatch(setLoading(false))
+      Toast.show({
+        type: 'error',
+        text1: 'Ops!',
+        text2: 'Try again later.',
+      })
+    }
+  }
+}
+
+export const clearSavedGames = () => ({
+  type: CLEAR_SAVED_GAMES,
+})
 
 const saveCartPending = () => ({
   type: SAVE_CART_PENDING,

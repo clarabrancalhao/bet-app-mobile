@@ -1,7 +1,7 @@
 import React from 'react'
 import { NativeSyntheticEvent } from 'react-native'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
-import { clearGame } from '../modules/cart/actions'
+import { clearGame, clearSavedGames, getFilteredGames } from '../modules/cart/actions'
 import { removeFilter, selectFilter, selectGame } from '../modules/games/actions'
 import { IGame } from '../utils/'
 
@@ -16,6 +16,8 @@ export const useSelectGame = () => {
     if (type === 'filter') {
       if (selectedFilters?.find((filter) => filter.type === game.type)) {
         dispatch(removeFilter(game.type))
+        dispatch(clearSavedGames())
+        dispatch(getFilteredGames(selectedFilters, 1))
       } else {
         dispatch(selectFilter(game))
       }

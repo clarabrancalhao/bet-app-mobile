@@ -27,7 +27,7 @@ const useAuthenticate = () => {
       if (response.data.token) {
         dispatch(setUserLogged(true))
         dispatch(getGames())
-        dispatch(getSavedGames())
+        dispatch(getSavedGames(1))
         navigation.push('Home')
         return
       } else {

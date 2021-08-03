@@ -10,6 +10,7 @@ import {
   GET_GAMES_PENDING,
   GET_GAMES_REJECTED,
   CLEAR_CART,
+  CLEAR_SAVED_GAMES,
 } from './actions'
 
 interface IInitialState {
@@ -82,15 +83,18 @@ function cartReducer(state: IInitialState = initialState, action: IAction) {
           type: cur.game.type,
           date: cur.created_at,
         }
-        return [parsedGame, ...acc]
+        return [...acc, parsedGame]
       }, [])
 
       return {
         ...state,
-        completedGames: games,
+        completedGames: [...state.completedGames, ...games],
         loading: false,
         error: null,
       }
+    case CLEAR_SAVED_GAMES:
+      return { ...state, completedGames: [] }
+
     case GET_GAMES_PENDING:
       return {
         ...state,

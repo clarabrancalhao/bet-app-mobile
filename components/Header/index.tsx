@@ -8,6 +8,7 @@ import { setUserLogged } from '../../modules/login/actions'
 import Button from '../Button'
 import { BUTTON_THEME } from '../Button/styles'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { clearSavedGames } from '../../modules/cart/actions'
 
 export interface IProps {
   page: string
@@ -20,7 +21,9 @@ const Header = ({ page, drawer, navigation }: IProps) => {
 
   const handleLogout = async () => {
     dispatch(setUserLogged(false))
+    dispatch(clearSavedGames())
     await AsyncStorage.removeItem('token')
+
     navigation.push('Login')
   }
 
