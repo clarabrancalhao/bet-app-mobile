@@ -23,37 +23,19 @@ export default function Home({ navigation }: IProps) {
 
   const [paginate, setPaginate] = useState({ page: 2, loading: false })
 
-  const filteredGame = useMemo(() => {
-    const filtered =
-      selectedFilters?.length === 0
-        ? games
-        : games.map((game: IGame) => {
-            const filter = selectedFilters.filter((filter: IGame) => {
-              filter.type === game.type
-            })
-            if (filter.length) {
-              return game
-            } else return
-          })
-
-    return filtered
-  }, [games, selectedFilters])
-
   const loadMoreGames = () => {
     if (paginate.loading) return
 
     setPaginate((prev) => ({ ...prev, loading: true }))
 
     if (selectedFilters.length) {
-      dispatch(getFilteredGames(selectedFilters, paginate.page))
+      dispatch(getFilteredGames(selectedFilters))
     }
 
     dispatch(getSavedGames(paginate.page))
 
     setPaginate((prev) => ({ page: prev.page + 1, loading: false }))
   }
-
-  console.log(games)
 
   return (
     <Wrapper>
@@ -68,7 +50,7 @@ export default function Home({ navigation }: IProps) {
       {!loading && games?.length > 0 && games[0].color && (
         <FlatList
           style={{ marginLeft: 20 }}
-          data={filteredGame}
+          data={games}
           numColumns={1}
           ListFooterComponent={
             <ActivityIndicator style={{ marginTop: 50 }} color={colors.TGL} size="large" />

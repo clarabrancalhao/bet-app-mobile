@@ -77,7 +77,7 @@ export const saveCart = (games: ISaveGame[]) => {
   }
 }
 
-export const getFilteredGames = (selectedFilters: IGame[], page: number) => {
+export const getFilteredGames = (selectedFilters: IGame[]) => {
   return async (dispatch: Dispatch<any>) => {
     if (selectedFilters.length === 3) {
       getSavedGames(1)
@@ -85,17 +85,20 @@ export const getFilteredGames = (selectedFilters: IGame[], page: number) => {
     }
     const filters =
       selectedFilters.length === 1
-        ? { game_id: selectedFilters[0].id }
-        : { game_id: selectedFilters[0].id, game_id_2: selectedFilters[1].id }
+        ? `?game_id=${selectedFilters[0].id}`
+        : `?game_id=${selectedFilters[0].id}&game_id_2=${selectedFilters[1].id}`
+
     try {
       dispatch(setLoading(true))
       const userId = await AsyncStorage.getItem('user_id')
       const token = await AsyncStorage.getItem('token')
-      const response = await axios.get(`${baseUrl}users/${userId}/bets`, filters, {
+      const response = await axios.get(`${baseUrl}users/${userId}/bets${filters}`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
       })
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      console.log({ response: response.data })
       dispatch(getGamesCompleted(response.data))
       dispatch(setLoading(false))
     } catch (error) {
