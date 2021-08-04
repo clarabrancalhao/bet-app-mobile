@@ -24,13 +24,10 @@ export default function Home({ navigation }: IProps) {
   const [paginate, setPaginate] = useState({ page: 2, loading: false })
 
   const loadMoreGames = () => {
+    if (selectedFilters.length) return
     if (paginate.loading) return
 
     setPaginate((prev) => ({ ...prev, loading: true }))
-
-    if (selectedFilters.length) {
-      dispatch(getFilteredGames(selectedFilters))
-    }
 
     dispatch(getSavedGames(paginate.page))
 
@@ -52,9 +49,6 @@ export default function Home({ navigation }: IProps) {
           style={{ marginLeft: 20 }}
           data={games}
           numColumns={1}
-          ListFooterComponent={
-            <ActivityIndicator style={{ marginTop: 50 }} color={colors.TGL} size="large" />
-          }
           onEndReached={loadMoreGames}
           onEndReachedThreshold={0.1}
           keyExtractor={(game) => `${game?.id}`}

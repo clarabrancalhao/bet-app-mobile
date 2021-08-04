@@ -79,6 +79,7 @@ export const saveCart = (games: ISaveGame[]) => {
 
 export const getFilteredGames = (selectedFilters: IGame[]) => {
   return async (dispatch: Dispatch<any>) => {
+    dispatch(clearSavedGames())
     if (selectedFilters.length === 3) {
       getSavedGames(1)
       return
@@ -97,8 +98,6 @@ export const getFilteredGames = (selectedFilters: IGame[]) => {
           Authorization: 'Bearer ' + token,
         },
       })
-      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      console.log({ response: response.data })
       dispatch(getGamesCompleted(response.data))
       dispatch(setLoading(false))
     } catch (error) {
